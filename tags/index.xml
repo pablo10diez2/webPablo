@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Welcome!</title>
-    <link>https://pablo10ez.com/tags/</link>
+    <link>https://pablo10diez2.github.io/webPablo/tags/</link>
     <description>Recent content in Tags on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://pablo10ez.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://pablo10diez2.github.io/webPablo/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Buffer Overflow</title>
-      <link>https://pablo10ez.com/tags/buffer-overflow/</link>
+      <link>https://pablo10diez2.github.io/webPablo/tags/buffer-overflow/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10ez.com/tags/buffer-overflow/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/tags/buffer-overflow/</guid>
       <description></description>
     </item>
     <item>
       <title>Exploitation</title>
-      <link>https://pablo10ez.com/tags/exploitation/</link>
+      <link>https://pablo10diez2.github.io/webPablo/tags/exploitation/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10ez.com/tags/exploitation/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/tags/exploitation/</guid>
       <description></description>
     </item>
     <item>
       <title>Gdb</title>
-      <link>https://pablo10ez.com/tags/gdb/</link>
+      <link>https://pablo10diez2.github.io/webPablo/tags/gdb/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10ez.com/tags/gdb/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/tags/gdb/</guid>
       <description></description>
     </item>
   </channel>
