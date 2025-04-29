@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Buffer Overflow on Welcome!</title>
+    <link>https://pablo10ez.com/tags/buffer-overflow/</link>
+    <description>Recent content in Buffer Overflow on Welcome!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://pablo10ez.com/tags/buffer-overflow/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>64 bits in my ark and texture</title>
+      <link>https://pablo10ez.com/posts/dawfctf/reversing-64-bits-in-my-ark-and-texture/</link>
+      <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>https://pablo10ez.com/posts/dawfctf/reversing-64-bits-in-my-ark-and-texture/</guid>
+      <description>from pwn import * # Se carga chall como un archivo ELF, se pone checksec a False para ahorrar el tiempo de ese proceso # si ya se sabe el resultado (checksec --file=./chall en ubuntu por ejemplo) elf = ELF(&amp;#34;./chall&amp;#34;, checksec=False) # Recomendable hacer esto, así le indicamos a pwntools que el contexto en el que vamos a estar # trabajando es x86 64bit, endian... context.binary = elf # Abrimos también la conexión remota p = remote(&amp;#34;connect.</description>
+    </item>
+  </channel>
+</rss>

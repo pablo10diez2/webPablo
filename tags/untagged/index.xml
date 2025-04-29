@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Untagged on Welcome!</title>
+    <link>http://localhost:36819/tags/untagged/</link>
+    <description>Recent content in Untagged on Welcome!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 29 Apr 2025 16:08:57 +0200</lastBuildDate>
+    <atom:link href="http://localhost:36819/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prueba</title>
+      <link>http://localhost:36819/posts/dawfctf/prueba/</link>
+      <pubDate>Tue, 29 Apr 2025 16:08:57 +0200</pubDate>
+      <guid>http://localhost:36819/posts/dawfctf/prueba/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
