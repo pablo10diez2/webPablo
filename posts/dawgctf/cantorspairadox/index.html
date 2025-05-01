@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Pablo">
+<meta name="description" content="Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!
+For this we are given 2 files. The first one is a .txt containing the following:
+flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016
+And the other one is a python file:
+from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n &#43; 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 &#43; n2 return getTriNumber(S) &#43; n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result." />
+<meta name="keywords" content=", cantor, Cryptography, math" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/" />
+
+
+    <title>
+        
+            [Cryptography] Cantors Pairadox :: Welcome!  — Writeups CTF
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="/webPablo/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/webPablo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/webPablo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/webPablo/favicon-16x16.png">
+    <link rel="manifest" href="/webPablo/site.webmanifest">
+    <link rel="mask-icon" href="/webPablo/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/webPablo/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="[Cryptography] Cantors Pairadox">
+<meta itemprop="description" content="Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!
+For this we are given 2 files. The first one is a .txt containing the following:
+flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016
+And the other one is a python file:
+from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n &#43; 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 &#43; n2 return getTriNumber(S) &#43; n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result."><meta itemprop="datePublished" content="2025-04-19T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2025-04-19T00:00:00+00:00" />
+<meta itemprop="wordCount" content="743">
+<meta itemprop="keywords" content="cantor,Cryptography,math," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="[Cryptography] Cantors Pairadox"/>
+<meta name="twitter:description" content="Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!
+For this we are given 2 files. The first one is a .txt containing the following:
+flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016
+And the other one is a python file:
+from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n &#43; 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 &#43; n2 return getTriNumber(S) &#43; n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result."/>
+
+
+
+
+
+    <meta property="article:section" content="Cryptography" />
+
+
+
+    <meta property="article:published_time" content="2025-04-19 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/webPablo" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text ">
+                hello</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/webPablo/posts/">Writeups</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        4 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/">[Cryptography] Cantors Pairadox</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>Challenge:
+<strong>Now that I have encrypted my flag with a new math function</strong>
+<strong>I was just researching I can know share it with my friend Cantor</strong>
+<strong>and no one will know how to read it except us!</strong></p>
+<p>For this we are given 2 files. The first one is a .txt containing
+the following:</p>
+<p><strong>flag = 4036872197130975885183239290191447112180924008343518098638033545
+53589334888434826276681036070738374179472139222629149731482620127084778
+4737584016</strong></p>
+<p>And the other one is a python file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sage.all <span style="color:#f92672">import</span> sqrt, floor
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> secret <span style="color:#f92672">import</span> flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e"># Ensure integer division</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(n1, n2):
+</span></span><span style="display:flex;"><span>    S <span style="color:#f92672">=</span> n1 <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> getTriNumber(S) <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(arr), <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(pair(arr[i], arr[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]))    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pad_to_power_of_two</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> arr
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(result)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (n <span style="color:#f92672">&amp;</span> (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> [ord(f) <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flag]  
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> pad_to_power_of_two(flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> flag
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> pair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Encoded:&#34;</span>, temp)
+</span></span></code></pre></div><p>Lets start by analizing what it does.</p>
+<p>First of all the variable containing the flag is converted to ASCII
+(example: &ldquo;flag&rdquo;-&gt;[102, 108, 97, 103]) and then pad_to_power_of_two() is called.
+This function just adds zeros to the right until the length is a power
+of 2. For example if it was [1,2,3] (length 3) it would convert it to
+[1,2,3,0] (lenght 4 = 2²).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> [ord(f) <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flag]  
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> pad_to_power_of_two(flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pad_to_power_of_two</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> arr
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(result)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (n <span style="color:#f92672">&amp;</span> (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Then the variable is passed into pair_array() 6 times. This function
+iterates over the temp variable and and passes to the function pair()
+two consecutive numbers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> flag
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> pair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(arr), <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(pair(arr[i], arr[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]))    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Lets forget about the function pair() and dive deep into pair_array(),
+if we had this list [2, 4, 5, 7] what pair_array() would do is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>))
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>))
+</span></span></code></pre></div><p>So we are converting 2 concatenate numbers into 1 and
+doing that 6 times. If we were to do it again with our example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(a, b))
+</span></span></code></pre></div><p>Like this we can convert 4 numbers into just one. Now lets look at how
+that unique number is calculated. First we add both numbers (S = n1 + n2) and we return
+the triangular number of S + n2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e"># Ensure integer division</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(n1, n2):
+</span></span><span style="display:flex;"><span>    S <span style="color:#f92672">=</span> n1 <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> getTriNumber(S) <span style="color:#f92672">+</span> n2
+</span></span></code></pre></div><p>This is the Cantor pairing function (the statement gives us a hint). So lets
+take a look at how our list would work with this pairing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>))
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Result: </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>-&gt; Result: [25, 85]</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">85</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Result: </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>-&gt; Result: [6190]</p>
+<p>And that is how we converted 4 numbers -&gt; 2 numbers -&gt; 1 number, iterating
+2 times.</p>
+<p>There is a formula to reverse this pairing and this is how it looks
+in Python.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sympy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair</span>(z):
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> floor((sqrt(<span style="color:#ae81ff">8</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> getTriNumber(w)
+</span></span><span style="display:flex;"><span>    n2 <span style="color:#f92672">=</span> z <span style="color:#f92672">-</span> t
+</span></span><span style="display:flex;"><span>    n1 <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n1, n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> unpair(z)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(a)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(b)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Now with all this we just need to call unpair_array() 6 times
+with the number we were provided and we will have the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sympy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair</span>(z):
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> floor((sqrt(<span style="color:#ae81ff">8</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> getTriNumber(w)
+</span></span><span style="display:flex;"><span>    n2 <span style="color:#f92672">=</span> z <span style="color:#f92672">-</span> t
+</span></span><span style="display:flex;"><span>    n1 <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n1, n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> unpair(z)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(a)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(b)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 1: the number we were given</span>
+</span></span><span style="display:flex;"><span>encoded_value <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4036872197130975885183239290191447112180924008343518098638033545535893348884348262766810360707383741794721392226291497314826201270847784737584016</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 2: unpair 6 times</span>
+</span></span><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> encoded_value
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> unpair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 3: to eliminate the zeros that were added when the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># length was converted to the power of 2 (this is not neccesary)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> temp <span style="color:#f92672">and</span> temp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    temp<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 4: convert to text</span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(chr(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> temp)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Decoded flag:&#34;</span>, flag)
+</span></span></code></pre></div><p><strong>Dawg{1_pr3f3r_4ppl3s_t0_pa1rs_4nyw2y5}</strong></p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/cantor/">cantor</a></span>
+        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/cryptography/">Cryptography</a></span>
+        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/math/">math</a></span>
+        
+    </p>
+
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+
+        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/categories/cryptography/">Cryptography</a></span>
+        
+    </p>
+
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        743 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2025-04-19 02:00
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+            <span class="button previous">
+                <a href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">[PWN] 64 bits in my ark and texture</span>
+                </a>
+            </span>
+            
+
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/webPablo/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
+
+
+
+
+    </body>
+</html>

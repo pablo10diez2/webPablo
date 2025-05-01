@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Welcome!</title>
-    <link>https://pablo10diez2.github.io/webPablo/</link>
-    <description>Recent content on Welcome!</description>
+    <title>Math on Welcome!</title>
+    <link>https://pablo10diez2.github.io/webPablo/tags/math/</link>
+    <description>Recent content in Math on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://pablo10diez2.github.io/webPablo/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>[PWN] 64 bits in my ark and texture</title>
-      <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/</link>
-      <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/</guid>
-      <description>Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237&#xA;Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the challenge is proposed:&#xA;They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja wen can see the first vulnerability.</description>
-    </item>
+    <lastBuildDate>Sat, 19 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://pablo10diez2.github.io/webPablo/tags/math/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Cryptography] Cantors Pairadox</title>
       <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/</link>
