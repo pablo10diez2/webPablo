@@ -262,6 +262,82 @@ Final Test:</strong></p>
         </item>
         
         <item>
+            <title>[Cryptography] Baby-RSA 2</title>
+            <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</link>
+            <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
+            
+            <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</guid>
+            <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!
+For this we are given 2 files. The first one is a .py and the second one what prints.
+from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
+            <content type="html"><![CDATA[<p>Challenge:
+<strong>If all I have to do is keep my factors p and q secret, then I can save</strong>
+<strong>computation time by sharing the same modulus between all my friends. I&rsquo;ll</strong>
+<strong>give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!</strong></p>
+<p>For this we are given 2 files. The first one is a .py and the second one what prints.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> secret <span style="color:#f92672">import</span> flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is my stuff! Don&#39;t look at it</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e_priv <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10001</span>
+</span></span><span style="display:flex;"><span>phi <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d_priv <span style="color:#f92672">=</span> inverse(e_priv, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> bytes_to_long(flag)
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> pow(m, e_priv, N)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is your stuff!</span>
+</span></span><span style="display:flex;"><span>e_pub <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d_pub <span style="color:#f92672">=</span> inverse(e_pub, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;e = </span><span style="color:#e6db74">{</span>e_pub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;d = </span><span style="color:#e6db74">{</span>d_pub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;N = </span><span style="color:#e6db74">{</span>N<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;c = </span><span style="color:#e6db74">{</span>c<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p><strong>e = 58271</strong>
+<strong>d =</strong> <strong>16314065939355844497428646964774413938010062495984944007868244761330321449198604198404787327825341236658059256072790190934480082681534717838850610633320375625893501985237981407305284860652632590435055933317638416556532857376955427517397962124909869006289022084571993305966362498048396739334756594170449299859</strong>
+<strong>N =</strong> <strong>11908266771291549727040770227788674365298563844463718805993868100807705889593534576540716051355511201319075171121352338919492532856516466781757032847478539199285763483256</strong>
+<strong>2389502866385475392702847788337877472422435555825872297998602400341624700149407637506713864175123267515579305109471947679940924817268027249</strong>
+<strong>c =</strong> <strong>1070895821540922853545147589874651120161444554801263669629104142937219656827406742051002228234391509902999896805931793509330204277323867163866850522216802742834694813501</strong>
+<strong>06415150660410528574034324184318354089504379956162660478769613136499331243363223860893663583161020156316072996007464894397755058410931262938</strong></p>
+<p>For this challenge we are requiered to know RSA cryptography and how their public and private keys work.</p>
+<p>A cypher message with RSA is calculated like this, ciphertext = m^e mod n. Where m is
+the plain message, e is the public exponent and n is the product of two large numbers p and q.</p>
+<p>To return to the plain text we have to decrypt it like this m =c^d mod n, where d is the private key.
+d is computed like this d×e ≡ 1 (mod φ(N)). Where φ(N) = (p-1)*(q-1).</p>
+<p>As we said e×d ≡ 1 (mod φ(N)) and we can rearrange it like this: e×d − 1 = k × φ(N) for some small integer k.
+So we need to find a number k that matches (e×d − 1) % k == 0.</p>
+<p>We can use this python script that will try different numbers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e_public <span style="color:#f92672">=</span> <span style="color:#ae81ff">58271</span>
+</span></span><span style="display:flex;"><span>d_public <span style="color:#f92672">=</span> <span style="color:#ae81ff">16314065939355844497428646964774413938010062495984944007868244761330321449198604198404787327825341236658059256072790190934480082681534717838850610633320375625893501985237981407305284860652632590435055933317638416556532857376955427517397962124909869006289022084571993305966362498048396739334756594170449299859</span>
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">119082667712915497270407702277886743652985638444637188059938681008077058895935345765407160513555112013190751711213523389194925328565164667817570328474785391992857634832562389502866385475392702847788337877472422435555825872297998602400341624700149407637506713864175123267515579305109471947679940924817268027249</span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> <span style="color:#ae81ff">107089582154092285354514758987465112016144455480126366962910414293721965682740674205100222823439150990299989680593179350933020427732386716386685052221680274283469481350106415150660410528574034324184318354089504379956162660478769613136499331243363223860893663583161020156316072996007464894397755058410931262938</span>
+</span></span><span style="display:flex;"><span>e_private <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>phiNxK <span style="color:#f92672">=</span> e_public <span style="color:#f92672">*</span> d_public <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1000000</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(phiNxK <span style="color:#f92672">%</span> k) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        Dprivate <span style="color:#f92672">=</span> pow(e_private, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiNxK<span style="color:#f92672">//</span>k)
+</span></span><span style="display:flex;"><span>        m <span style="color:#f92672">=</span> long_to_bytes(pow(c,Dprivate,N))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;mensaje: </span><span style="color:#e6db74">{</span>(m)<span style="color:#f92672">.</span>decode()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span></code></pre></div><p><strong>DawgCTF{kn0w1ng_d_1s_kn0w1ng_f4ct0rs}</strong></p>
+]]></content>
+        </item>
+        
+        <item>
             <title>[Cryptography] Cantors Pairadox</title>
             <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/</link>
             <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
