@@ -1,164 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+<head>
 	<meta name="generator" content="Hugo 0.123.7"><script src="/webPablo/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=webPablo/livereload" data-no-instant defer></script>
-        <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pablo Díez - CTF Portfolio</title>
+    <style>
+        :root {
+          --ctf-pink: #ff3860;
+          --ctf-gray: #2b2b2b;
+          --ctf-light-gray: #404040;
+          --ctf-dark-gray: #1a1a1a;
+          --text-white: #ffffff;
+          --text-light: #cccccc;
+          --bg-glass: rgba(43, 43, 43, 0.9);
+          --bg-card: rgba(64, 64, 64, 0.8);
+        }
 
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="author" content="Pablo Díez ">
-<meta name="description" content="" />
-<meta name="keywords" content="" />
-<meta name="robots" content="noodp" />
-<meta name="theme-color" content="" />
-<link rel="canonical" href="http://localhost:1313/webPablo/" />
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+          background: var(--ctf-gray);
+          min-height: 100vh;
+          margin: 0;
+          position: relative;
+          overflow-x: hidden;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
 
-    <title>
+        body::before {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: 
+            radial-gradient(circle at 20% 80%, rgba(255, 56, 96, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, rgba(255, 56, 96, 0.05) 0%, transparent 50%);
+          z-index: -1;
+        }
+
+        .skyline {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 40vh;
+          z-index: -1;
+          opacity: 0.3;
+          filter: blur(2px);
+        }
+
+        .skyline svg {
+          width: 100%;
+          height: 100%;
+          fill: var(--ctf-pink);
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          33% { transform: translateY(-10px) rotate(1deg); }
+          66% { transform: translateY(5px) rotate(-1deg); }
+        }
+
+        .main {
+          position: relative;
+          z-index: 10;
+        }
+
+        .main__inner {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: clamp(1rem, 5vw, 2rem);
+          line-height: 1.7;
+          font-size: clamp(1rem, 2.5vw, 1.1rem);
+          backdrop-filter: blur(10px);
+          background: var(--bg-glass);
+          border-radius: 20px;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          margin-top: 2rem;
+          margin-bottom: 2rem;
+        }
+
+        .hero-title {
+          font-size: clamp(2rem, 6vw, 2.5rem);
+          margin-bottom: 1rem;
+          text-align: center;
+          color: var(--text-white);
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+          font-weight: 800;
+        }
+
+        .intro-text {
+          margin-bottom: 1rem;
+          text-align: center;
+          color: var(--text-light);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .team-link {
+          color: var(--ctf-pink);
+          text-decoration: none;
+          font-weight: bold;
+          font-style: italic;
+          border-bottom: 2px solid transparent;
+          transition: all 0.3s ease;
+        }
+
+        .team-link:hover {
+          border-bottom-color: var(--ctf-pink);
+          text-shadow: 0 0 8px var(--ctf-pink);
+          transform: translateY(-1px);
+        }
+
+        .section-title {
+          font-size: clamp(1.5rem, 4vw, 2rem);
+          margin: 2rem 0 1rem;
+          font-weight: bold;
+          color: var(--ctf-pink);
+          text-align: center;
+          text-shadow: 0 0 10px rgba(255, 56, 96, 0.5);
+        }
+
+        .ctf-results {
+          background: var(--bg-card);
+          border-radius: 15px;
+          padding: 1.5rem;
+          margin-bottom: 2rem;
+          backdrop-filter: blur(5px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          position: relative;
+          z-index: 15;
+        }
+
+        .ctf-list {
+          list-style: none;
+          padding: 0;
+        }
+
+        .ctf-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 1rem;
+          margin-bottom: 0.5rem;
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 10px;
+          backdrop-filter: blur(5px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          transition: all 0.3s ease;
+        }
+
+        .ctf-item:hover {
+          transform: translateY(-2px);
+          background: var(--ctf-light-gray);
+          box-shadow: 0 8px 25px rgba(255, 56, 96, 0.2);
+          border: 1px solid rgba(255, 56, 96, 0.3);
+        }
+
+        .ctf-name {
+          font-weight: 500;
+          color: var(--text-white);
+        }
+
+        .ctf-rank {
+          font-weight: bold;
+          color: var(--ctf-pink);
+          text-shadow: 0 0 5px rgba(255, 56, 96, 0.5);
+        }
+
+        .cta-button {
+          display: inline-block;
+          background: linear-gradient(135deg, var(--ctf-pink), #ff6b9d);
+          color: white;
+          padding: 0.75rem 1.5rem;
+          text-decoration: none;
+          border-radius: 25px;
+          font-weight: bold;
+          transition: all 0.3s ease;
+          box-shadow: 0 8px 25px rgba(255, 56, 96, 0.4);
+          text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+          border: 1px solid var(--ctf-pink);
+        }
+
+        .cta-button:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 12px 35px rgba(255, 56, 96, 0.6);
+          background: var(--ctf-pink);
+        }
+
+        .sunset-orb {
+          position: fixed;
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, var(--ctf-pink), #ff6b9d);
+          border-radius: 50%;
+          top: 10%;
+          right: 10%;
+          opacity: 0.3;
+          z-index: -1;
+          animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); opacity: 0.6; }
+          50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        @media (max-width: 768px) {
+          .ctf-item {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+          }
+          
+          .sunset-orb {
+            width: 120px;
+            height: 120px;
+            top: 5%;
+            right: 5%;
+          }
+
+          .skyline {
+            height: 30vh;
+          }
+        }
+    </style>
+</head>
+<body>
+    <div class="skyline">
+      <svg viewBox="0 0 1200 400" preserveAspectRatio="none">
         
-            Welcome!  — Writeups CTF 
+        <polygon points="0,400 0,320 40,320 40,280 80,280 80,240 120,240 120,200 160,200 160,160 200,160 200,120 240,120 240,100 280,100 280,80 320,80 320,60 360,60 360,40 400,40 400,20 440,20 440,40 480,40 480,60 520,60 520,80 560,80 560,100 600,100 600,120 640,120 640,140 680,140 680,160 720,160 720,180 760,180 760,200 800,200 800,220 840,220 840,240 880,240 880,260 920,260 920,280 960,280 960,300 1000,300 1000,320 1040,320 1040,340 1080,340 1080,360 1120,360 1120,380 1200,380 1200,400" />
         
-    </title>
-
-
-
-
-
-  <link rel="stylesheet" href="/webPablo/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
-
-
-
-
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/webPablo/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/webPablo/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/webPablo/favicon-16x16.png">
-    <link rel="manifest" href="/webPablo/site.webmanifest">
-    <link rel="mask-icon" href="/webPablo/safari-pinned-tab.svg" color="">
-    <link rel="shortcut icon" href="/webPablo/favicon.ico">
-    <meta name="msapplication-TileColor" content="">
-
-
-<meta itemprop="name" content="Welcome!">
-<meta itemprop="description" content="">
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Welcome!"/>
-<meta name="twitter:description" content=""/>
-
-
-
-
-
-
-
-
-
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/webPablo/index.xml" title="Welcome!" />
-
-
-
-
-
-
-
-
-
-    </head>
-
-    
-        <body>
-    
-    
-        <div class="container">
-            <header class="header">
-    <span class="header__inner">
-        <a href="/webPablo" style="text-decoration: none;">
-    <div class="logo">
         
-            <span class="logo__mark">></span>
-            <span class="logo__text ">
-                hello</span>
-            <span class="logo__cursor" style=
-                  "
-                   
-                   ">
-            </span>
+        <rect x="60" y="200" width="15" height="80" opacity="0.8"/>
+        <rect x="85" y="180" width="20" height="100" opacity="0.7"/>
+        <rect x="140" y="140" width="15" height="120" opacity="0.8"/>
+        <rect x="180" y="100" width="18" height="160" opacity="0.7"/>
+        <rect x="220" y="80" width="15" height="180" opacity="0.8"/>
+        <rect x="260" y="60" width="20" height="200" opacity="0.7"/>
+        <rect x="300" y="40" width="15" height="220" opacity="0.8"/>
+        <rect x="340" y="30" width="18" height="230" opacity="0.7"/>
+        <rect x="380" y="15" width="15" height="245" opacity="0.8"/>
+        <rect x="420" y="25" width="20" height="235" opacity="0.7"/>
+        <rect x="460" y="45" width="15" height="215" opacity="0.8"/>
+        <rect x="500" y="65" width="18" height="195" opacity="0.7"/>
+        <rect x="540" y="85" width="15" height="175" opacity="0.8"/>
+        <rect x="580" y="105" width="20" height="155" opacity="0.7"/>
+        <rect x="620" y="125" width="15" height="135" opacity="0.8"/>
+        <rect x="660" y="145" width="18" height="115" opacity="0.7"/>
+        <rect x="700" y="165" width="15" height="95" opacity="0.8"/>
+        <rect x="740" y="185" width="20" height="75" opacity="0.7"/>
+        <rect x="780" y="205" width="15" height="55" opacity="0.8"/>
+        <rect x="820" y="225" width="18" height="35" opacity="0.7"/>
+        <rect x="860" y="245" width="15" height="15" opacity="0.8"/>
         
+        
+        <g opacity="0.4">
+          <rect x="65" y="210" width="3" height="4"/>
+          <rect x="70" y="210" width="3" height="4"/>
+          <rect x="65" y="220" width="3" height="4"/>
+          <rect x="70" y="220" width="3" height="4"/>
+          <rect x="65" y="230" width="3" height="4"/>
+          <rect x="70" y="230" width="3" height="4"/>
+          
+          <rect x="90" y="190" width="3" height="4"/>
+          <rect x="95" y="190" width="3" height="4"/>
+          <rect x="100" y="190" width="3" height="4"/>
+          <rect x="90" y="200" width="3" height="4"/>
+          <rect x="95" y="200" width="3" height="4"/>
+          <rect x="100" y="200" width="3" height="4"/>
+          
+          <rect x="185" y="110" width="3" height="4"/>
+          <rect x="190" y="110" width="3" height="4"/>
+          <rect x="185" y="120" width="3" height="4"/>
+          <rect x="190" y="120" width="3" height="4"/>
+          <rect x="185" y="130" width="3" height="4"/>
+          <rect x="190" y="130" width="3" height="4"/>
+          
+          <rect x="265" y="70" width="3" height="4"/>
+          <rect x="270" y="70" width="3" height="4"/>
+          <rect x="275" y="70" width="3" height="4"/>
+          <rect x="265" y="80" width="3" height="4"/>
+          <rect x="270" y="80" width="3" height="4"/>
+          <rect x="275" y="80" width="3" height="4"/>
+          
+          <rect x="385" y="25" width="3" height="4"/>
+          <rect x="390" y="25" width="3" height="4"/>
+          <rect x="385" y="35" width="3" height="4"/>
+          <rect x="390" y="35" width="3" height="4"/>
+          <rect x="385" y="45" width="3" height="4"/>
+          <rect x="390" y="45" width="3" height="4"/>
+        </g>
+      </svg>
     </div>
-</a>
-
-
-        <span class="header__right">
-                <nav class="menu">
-    <ul class="menu__inner"><li><a href="/webPablo/posts/">Writeups</a></li>
-    </ul>
-</nav>
-
-                <span class="menu-trigger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
-                    </svg>
-                </span>
-        </span>
-    </span>
-</header>
-
-
-            <div class="content">
-                
-<main class="main">
-  <div class="main__inner" style="max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.7; font-size: 1.1rem;">
-
-    <h1 style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">Welcome!</h1>
-
-    <p style="margin-bottom: 1rem; text-align: center;">
-      Hi, my name is Pablo Díez. Here are all the CTFs I've taken part in as a member of
-      <a href="https://ctftime.org/team/373961" target="_blank" style="color: #ff3860; text-decoration: underline; font-weight: bold; font-style: italic;">0xD3C0D3</a>
-      (Deusto Electronic Club Of Developers and Engineers).
-    </p>
-
-    <p style="margin-bottom: 2rem; text-align: center;">
-      Not all the writeups for the challenges I solve are published — only those I find interesting or worth sharing.
-    </p>
-
     
-    <h2 style="font-size: 2rem; margin-bottom: 1rem; font-weight: bold; color: #ff3860; text-align: center;">CTF Results</h2>
-
-    <ul style="list-style-type: none; padding-left: 0; margin-bottom: 2rem; text-align: left;">
-      <li style="margin-bottom: 0.5rem;">- UTCTF (University of Texas): <strong>72nd</strong> out of <strong>859</strong> teams</li>
-      <li style="margin-bottom: 0.5rem;">- Cyber Apocalypse CTF 2025 (Hack The Box): <strong>588th</strong> out of <strong>4038</strong> teams</li>
-      <li style="margin-bottom: 0.5rem;">- Midnight Flag CTF - INSURRECTION (L'École Supérieure du Numérique de Bretagne): <strong>40th</strong> out of <strong>364</strong> teams</li>
-      <li style="margin-bottom: 0.5rem;">- DawgCTF 2025 (University of Maryland, Baltimore County): <strong>96th</strong> out of <strong>760</strong> teams</li>
-    </ul>
-
-    <p>
-      <a href="/webPablo/posts/" style="display: inline-block; background: #ff3860; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 5px; font-weight: bold;">
-        Go to Writeups
-      </a>
-    </p>
-
-  </div>
-</main>
-
-            </div>
-
-            
-                <footer class="footer">
+    <div class="sunset-orb"></div>
     
-    
-</footer>
-
-            
-        </div>
-
+    <main class="main">
+      <div class="main__inner">
+        <h1 class="hero-title">Welcome! 👋</h1>
         
+        <p class="intro-text">
+          Hi, my name is Pablo Díez. Here are all the CTFs I've taken part in as a member of
+          <a href="https://ctftime.org/team/373961" target="_blank" rel="noopener" class="team-link">
+            0xD3C0D3
+          </a>
+          (Deusto Electronic Club Of Developers and Engineers).
+        </p>
+        
+        <p class="intro-text">
+          Not all the writeups for the challenges I solve are published — only those I find interesting or worth sharing.
+        </p>
 
+        <section class="ctf-results">
+          <h2 class="section-title">🏆 CTF Results</h2>
+          <ul class="ctf-list">
+            <li class="ctf-item">
+              <span class="ctf-name">UTCTF (University of Texas)</span>
+              <span class="ctf-rank">72nd / 859 teams</span>
+            </li>
+            <li class="ctf-item">
+              <span class="ctf-name">Cyber Apocalypse CTF 2025 (Hack The Box)</span>
+              <span class="ctf-rank">588th / 4038 teams</span>
+            </li>
+            <li class="ctf-item">
+              <span class="ctf-name">Midnight Flag CTF - INSURRECTION</span>
+              <span class="ctf-rank">40th / 364 teams</span>
+            </li>
+            <li class="ctf-item">
+              <span class="ctf-name">DawgCTF 2025 (UMBC)</span>
+              <span class="ctf-rank">96th / 760 teams</span>
+            </li>
+          </ul>
+        </section>
 
-
-<script type="text/javascript" src="/webPablo/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
-
-
-
-
-    </body>
+        <p style="text-align: center;">
+          <a href="/webPablo/posts/" class="cta-button">
+            📝 Go to Writeups
+          </a>
+        </p>
+      </div>
+    </main>
+</body>
 </html>
