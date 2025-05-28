@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/webPablo/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=webPablo/livereload" data-no-instant defer></script>
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="Pablo">
 <meta name="description" content="Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237
-Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the challenge is proposed:
-They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja wen can see the first vulnerability." />
+Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:
+They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability." />
 <meta name="keywords" content=", buffer overflow, exploitation, gdb" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
-<link rel="canonical" href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/" />
+<link rel="canonical" href="http://localhost:1313/webPablo/posts/dawgctf/64-bits/" />
 
 
     <title>
@@ -42,15 +42,15 @@ They ask us to simply jump to a memory address, if we run this binary with ghidr
 
 <meta itemprop="name" content="[PWN] 64 bits in my ark and texture">
 <meta itemprop="description" content="Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237
-Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the challenge is proposed:
-They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja wen can see the first vulnerability."><meta itemprop="datePublished" content="2025-04-21T00:00:00+00:00" />
+Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:
+They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability."><meta itemprop="datePublished" content="2025-04-21T00:00:00+00:00" />
 <meta itemprop="dateModified" content="2025-04-21T00:00:00+00:00" />
-<meta itemprop="wordCount" content="1515">
+<meta itemprop="wordCount" content="1662">
 <meta itemprop="keywords" content="buffer overflow,exploitation,gdb," />
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="[PWN] 64 bits in my ark and texture"/>
 <meta name="twitter:description" content="Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237
-Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the challenge is proposed:
-They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja wen can see the first vulnerability."/>
+Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:
+They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability."/>
 
 
 
@@ -133,7 +133,7 @@ They ask us to simply jump to a memory address, if we run this binary with ghidr
 
     <article>
       <h1 class="post-title">
-        <a href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/">[PWN] 64 bits in my ark and texture</a>
+        <a href="http://localhost:1313/webPablo/posts/dawgctf/64-bits/">[PWN] 64 bits in my ark and texture</a>
       </h1>
 
       
@@ -149,37 +149,52 @@ Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitati
 nc connect.umbccd.net 22237</strong></p>
 <p>Alongside this, we are provided with a binary file. When we execute the
 file 3 basic questions about x86-64 appear.
-Once we answer the first three questions (2, 1, 4), the first part of the
+Once we answer the first three questions (2, 1, 4), the first part of the real
 challenge is proposed:</p>
 <p><img src="/webPablo/images/questions.png" alt="Questions"></p>
 <p>They ask us to simply jump to a memory address, if we run this binary with
-ghidra or binaryNinja wen can see the first vulnerability.</p>
+ghidra or binaryNinja (tools for analyzing compiled software) wen can see
+the first vulnerability.</p>
 <p><img src="/webPablo/images/binary.png" alt="Binary"></p>
-<p>The main function is using fgets() to read the user input. The problem is that is reading
-(0x200 -&gt; 512) 512 bytes and stores it in a variable buf. But since buf is defined as
-int64_t it means it can only store 8 bytes. Also the name of the rest of the functions
-are win1, win2, win3 and the main function so we need to take that into account if we
-dont want to use the pure addresses.</p>
+<p>At the end of the main function we can see that is using fgets() to read the user input.
+The problem is that is reading 0x200 bytes (0x200 in hexadecimal = 512 bytes) and storing
+it in a variable buf. But since buf is defined as int64_t it means it can only store 8 bytes.</p>
+<p>For later use keep in mind that the names of the functions we are going to use are:
+-main
+-win1
+-win2
+-win3
+All of these can be seen when the binary is run with gdb, ghidra&hellip; They will make our life
+easier since we will not have to deal with little/big endian.</p>
 <p>This leads us to a buffer overflow vulnerability, since we can input more bytes than
-the variable is able to deal with we can overwrite memory addresses.
+the variable is able to deal with, we can overwrite memory addresses.
 For us to make a call to another function we need to understand some basic things.</p>
-<p>Once a function finishes it knows where to jump thanks to the return pointer that stores
-the address of the next function. So the first thing we need to know is how much data we
-need to input before overwriting this pointer. For this I&rsquo;m goint to be using gdb with pwn.</p>
+<p>Once a function finishes it knows where to jump thanks to the return pointer (rsp), that stores
+the address of the next function. That is to say that we need to find where the rsp is and overwrite
+the address with the one we want.</p>
+<p>So the first thing we need to know is how much data weneed to input before overwriting
+this pointer. For this I&rsquo;m goint to be using gdb with pwn.</p>
 <p>First we run in our terminal gdb ./chall, when we are alredy inside of pwndgb we can enter the
 command run and answer the questions. Once we answer them we have to make a little script with
 python that will allow as to know the number of character we need to introduce.</p>
-<p>These 3 lines of code allow us to create a pattern, lets say for example 200. Once we have that
+<p>These 3 lines of code allow us to create a pattern, of length 200. Once we have that
 we print it and copy it to out clipboard.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span>pattern <span style="color:#f92672">=</span> cyclic(<span style="color:#ae81ff">200</span>)
 </span></span><span style="display:flex;"><span>print(pattern<span style="color:#f92672">.</span>decode())
-</span></span></code></pre></div><p>Now we enter this pattern and see that the program failed, we accessed something that we shouldn&rsquo;t in the memory and it
-broke. But if we scroll down a little bit we can see some interesting report that pwndgb shows to us.</p>
+</span></span></code></pre></div><p>This will print something like: aabbacabwbbbcawewca&hellip; Which might seem random letters
+but they do have a specific order.</p>
+<p>Now we enter this pattern and see that the program failed, we accessed something that we
+shouldn&rsquo;t in the memory and it broke. But if we scroll down a little bit we can see some
+interesting report that pwndgb shows to us.</p>
 <p><img src="/webPablo/images/first.png" alt="Error"></p>
-<p>We can see the value of rsp (the return pointer address) with some letters that seem familiar, part of the pattern
-we introduced. With another line of code we can see how many chars we need to reach the rsp.</p>
+<p>We can see the value of rsp with some letters that seem familiar, part of the pattern
+we introduced.</p>
 <p><img src="/webPablo/images/error.png" alt="rsp"></p>
+<p>Now that we have this we can run another command with python. This will tell us
+the number of letters we need to reach this part of the pattern. So if this prints
+30 it means that we could inject 30 random letters and then after that we would be
+overwriting the rsp.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(cyclic_find(<span style="color:#e6db74">&#34;naaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>))
 </span></span></code></pre></div><p>And this prints 152, meaning that after 152 characters we can point to wherever we want and the program will
 jump there.</p>
@@ -213,12 +228,11 @@ jump there.</p>
 </span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
 </span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 1 ----------</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a ROP (Return Oriented Programming) object to</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># build the payload.</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># The payload is constructed locally using the ELF binary</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># and then sent to the remote process.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># and then sent to the remote process. (Remember the statement)</span>
 </span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(elf)
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Fill the buffer with 152 characters, stopping right</span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># before the return address</span>
@@ -238,20 +252,22 @@ Lesson 2 Arguments: Research how arguments are passed to functions and apply you
 the temple of 0x401314 to claim your advance.DawgCTF{C0ngR4tul4t10ns_
 Continue:</strong></p>
 <p>We need to call another function but in this case with an argument. Now we need to understand how to call a function in this case.
-Here comes to play the title of the challenge (64-bits). Let&rsquo;s look at the image below, above the return pointer there are arguments from 7 to
-n and below the pointer the registers. When a function is called in 32 bit architecture all the arguments are passed directly to the stack.
-But in this case we are working in a 64 bits architecture and when calling a function the first 6 parameters are stored in different registers.
+Here comes to play the title of the challenge (64-bits).</p>
+<p>Let&rsquo;s look at the image below, above the return pointer there are arguments from 7 to
+n and below the pointer, the registers. When a function is called in 32 bit architecture all the arguments are passed directly to the stack.</p>
+<p>But in this case we are working in a 64 bits architecture and when calling a function the first 6 parameters are stored in different registers.
 That&rsquo;s why in the image the arguments start from the 7th.</p>
 <p><img src="/webPablo/images/stack.png" alt="stack"></p>
 <p>Now that we know this we can take a look at which are the registers that are used for the arguments. Since we are only going to need
-1 argument we will use rdi.</p>
+1 argument we will use the first one, rdi.</p>
 <p><img src="/webPablo/images/registers.png" alt="registers"></p>
-<p>Before rewriting the script, once the first bufferoverflow is done calling win1 we can then concatenate the next payload. There
-is no need to make another bufferoverflow since we are alredy stacking them in the stack.</p>
+<p>Before rewriting the script we need to understand this, once the first bufferoverflow is done calling win1 we can then concatenate the next payload. There
+is no need to make another bufferoverflow and run them separately, since we are alredy stacking them in the stack.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the binary as an ELF object. We set checksec to False to skip security checks</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># if we already know the result (you can check manually with: checksec --file=./chall)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># if we already know the result (you can check manually in the terminal </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># with: checksec --file=./chall)</span>
 </span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./chall&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># It&#39;s good practice to define the context so pwntools knows we are working with a 64-bit x86 binary</span>
@@ -304,7 +320,8 @@ is no need to make another bufferoverflow since we are alredy stacking them in t
 [0xFEEDCAFE]. You must venture out and find the temple yourself. I believe in you
 d15c1p13_y0u_
 Final Test:</strong></p>
-<p>This is no different than the previous one, we just need to concatenate the 3 payloads and this is the final script:</p>
+<p>This is no different than the previous one, we just need to concatenate the 3 payloads and this is the final script. And like we
+saw in a photo earlier we need the 3 register that pass the first 3 arguments, rdi, rsi and rdx.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the binary as an ELF object. We set checksec</span>
@@ -395,9 +412,9 @@ Final Test:</strong></p>
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
-        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/buffer-overflow/">buffer overflow</a></span>
-        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/exploitation/">exploitation</a></span>
-        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/tags/gdb/">gdb</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/tags/buffer-overflow/">buffer overflow</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/tags/exploitation/">exploitation</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/tags/gdb/">gdb</a></span>
         
     </p>
 
@@ -405,7 +422,7 @@ Final Test:</strong></p>
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
 
-        <span class="tag"><a href="https://pablo10diez2.github.io/webPablo/categories/reversing/">reversing</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/categories/reversing/">reversing</a></span>
         
     </p>
 
@@ -418,7 +435,7 @@ Final Test:</strong></p>
           <line x1="16" y1="17" x2="8" y2="17"></line>
           <polyline points="10 9 9 9 8 9"></polyline>
         </svg>
-        1515 Words
+        1662 Words
       </p>
 
       <p>
@@ -447,7 +464,7 @@ Final Test:</strong></p>
 
             
             <span class="button next">
-                <a href="https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/">
+                <a href="http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/">
                     <span class="button__text">[Cryptography] Baby-RSA 2</span>
                     <span class="button__icon">→</span>
                 </a>
