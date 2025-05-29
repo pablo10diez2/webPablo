@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Rsa on Welcome!</title>
-    <link>http://localhost:1313/webPablo/tags/rsa/</link>
+    <link>https://pablo10diez2.github.io/webPablo/tags/rsa/</link>
     <description>Recent content in Rsa on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 19 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/webPablo/tags/rsa/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://pablo10diez2.github.io/webPablo/tags/rsa/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[Cryptography] Baby-RSA 2</title>
-      <link>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</link>
+      <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</guid>
       <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!&#xA;For this we are given 2 files. The first one is a .py and the second one what prints.&#xA;from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
     </item>
   </channel>

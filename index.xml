@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Welcome!</title>
-    <link>http://localhost:1313/webPablo/</link>
+    <link>https://pablo10diez2.github.io/webPablo/</link>
     <description>Recent content on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/webPablo/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://pablo10diez2.github.io/webPablo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[PWN] 64 bits in my ark and texture</title>
-      <link>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</link>
+      <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/64-bits/</guid>
       <description>Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237&#xA;Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:&#xA;They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability.</description>
     </item>
     <item>
       <title>[Cryptography] Baby-RSA 2</title>
-      <link>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</link>
+      <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/baby-rsa2/</guid>
       <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!&#xA;For this we are given 2 files. The first one is a .py and the second one what prints.&#xA;from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
     </item>
     <item>
       <title>[Cryptography] Cantors Pairadox</title>
-      <link>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</link>
+      <link>https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/posts/dawgctf/cantorspairadox/</guid>
       <description>Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!&#xA;For this we are given 2 files. The first one is a .txt containing the following:&#xA;flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016&#xA;And the other one is a python file:&#xA;from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n + 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 + n2 return getTriNumber(S) + n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result.</description>
     </item>
   </channel>
