@@ -32,67 +32,131 @@
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         }
 
-        body::before {
-          content: '';
+         
+        .geometric-bg {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
-          background: 
-            radial-gradient(circle at 20% 80%, rgba(255, 56, 96, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 80% 20%, rgba(255, 56, 96, 0.05) 0%, transparent 50%);
           z-index: -1;
+          background: linear-gradient(45deg, var(--ctf-dark-gray) 0%, var(--ctf-gray) 50%, var(--ctf-light-gray) 100%);
         }
 
-        .skyline {
-          position: fixed;
-          bottom: 0;
+        .geometric-bg::before {
+          content: '';
+          position: absolute;
+          top: 0;
           left: 0;
           width: 100%;
-          height: 40vh;
-          z-index: -1;
-          opacity: 0.25;
-          filter: blur(1px);
+          height: 100%;
+          background-image: 
+            radial-gradient(circle at 25% 25%, rgba(255, 56, 96, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(255, 107, 157, 0.08) 0%, transparent 50%),
+            linear-gradient(135deg, transparent 0%, rgba(255, 56, 96, 0.05) 50%, transparent 100%);
+          animation: geometricMove 20s ease-in-out infinite;
         }
 
-        .skyline svg {
+        .geometric-bg::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
           width: 100%;
           height: 100%;
+          background-size: 60px 60px;
+          background-image: 
+            linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px),
+            linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+          opacity: 0.3;
         }
 
-        .building {
-          fill: #1a1a1a;
-          stroke: #333;
-          stroke-width: 0.5;
+        @keyframes geometricMove {
+          0%, 100% { transform: translateX(0%) translateY(0%) rotate(0deg); }
+          25% { transform: translateX(2%) translateY(-1%) rotate(1deg); }
+          50% { transform: translateX(-1%) translateY(2%) rotate(-0.5deg); }
+          75% { transform: translateX(1%) translateY(-2%) rotate(0.5deg); }
         }
 
-        .building-light {
-          fill: #444;
-          stroke: #555;
-          stroke-width: 0.3;
+         
+        .floating-particles {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          pointer-events: none;
         }
 
-        .window {
-          fill: #ffeb3b;
-          opacity: 0.8;
+        .particle {
+          position: absolute;
+          width: 2px;
+          height: 2px;
+          background: var(--ctf-pink);
+          border-radius: 50%;
+          opacity: 0.6;
+          animation: float 6s ease-in-out infinite;
         }
 
-        .window-dim {
-          fill: #666;
-          opacity: 0.4;
-        }
-
-        .antenna {
-          stroke: #333;
-          stroke-width: 1;
-          fill: none;
-        }
+        .particle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; animation-duration: 8s; }
+        .particle:nth-child(2) { top: 60%; left: 20%; animation-delay: 1s; animation-duration: 6s; }
+        .particle:nth-child(3) { top: 40%; left: 70%; animation-delay: 2s; animation-duration: 7s; }
+        .particle:nth-child(4) { top: 80%; left: 50%; animation-delay: 3s; animation-duration: 9s; }
+        .particle:nth-child(5) { top: 10%; left: 80%; animation-delay: 4s; animation-duration: 5s; }
+        .particle:nth-child(6) { top: 70%; left: 90%; animation-delay: 5s; animation-duration: 8s; }
+        .particle:nth-child(7) { top: 30%; left: 30%; animation-delay: 1.5s; animation-duration: 6.5s; }
+        .particle:nth-child(8) { top: 90%; left: 15%; animation-delay: 2.5s; animation-duration: 7.5s; }
 
         @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          33% { transform: translateY(-10px) rotate(1deg); }
-          66% { transform: translateY(5px) rotate(-1deg); }
+          0%, 100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.6; }
+          25% { transform: translateY(-20px) translateX(10px) scale(1.2); opacity: 0.8; }
+          50% { transform: translateY(-10px) translateX(-5px) scale(0.8); opacity: 0.4; }
+          75% { transform: translateY(-30px) translateX(15px) scale(1.1); opacity: 0.7; }
+        }
+
+         
+        .light-orb {
+          position: fixed;
+          border-radius: 50%;
+          z-index: -1;
+          pointer-events: none;
+          filter: blur(40px);
+        }
+
+        .orb-1 {
+          width: 300px;
+          height: 300px;
+          background: radial-gradient(circle, rgba(255, 56, 96, 0.3), rgba(255, 56, 96, 0.1), transparent);
+          top: 10%;
+          right: 10%;
+          animation: pulse 8s ease-in-out infinite;
+        }
+
+        .orb-2 {
+          width: 200px;
+          height: 200px;
+          background: radial-gradient(circle, rgba(255, 107, 157, 0.2), rgba(255, 107, 157, 0.08), transparent);
+          bottom: 20%;
+          left: 15%;
+          animation: pulse 6s ease-in-out infinite reverse;
+        }
+
+        .orb-3 {
+          width: 150px;
+          height: 150px;
+          background: radial-gradient(circle, rgba(255, 56, 96, 0.15), rgba(255, 56, 96, 0.05), transparent);
+          top: 50%;
+          left: 70%;
+          animation: pulse 10s ease-in-out infinite;
+          animation-delay: 2s;
+        }
+
+        @keyframes pulse {
+          0%, 100% { transform: scale(1) translateY(0px); opacity: 0.6; }
+          25% { transform: scale(1.1) translateY(-10px); opacity: 0.8; }
+          50% { transform: scale(0.9) translateY(5px); opacity: 0.4; }
+          75% { transform: scale(1.05) translateY(-5px); opacity: 0.7; }
         }
 
         .main {
@@ -106,11 +170,11 @@
           padding: clamp(1rem, 5vw, 2rem);
           line-height: 1.7;
           font-size: clamp(1rem, 2.5vw, 1.1rem);
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(20px);
           background: var(--bg-glass);
           border-radius: 20px;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+          border: 1px solid rgba(255, 255, 255, 0.2);
           margin-top: 2rem;
           margin-bottom: 2rem;
         }
@@ -160,7 +224,7 @@
           border-radius: 15px;
           padding: 1.5rem;
           margin-bottom: 2rem;
-          backdrop-filter: blur(5px);
+          backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.2);
           position: relative;
           z-index: 15;
@@ -222,24 +286,6 @@
           background: var(--ctf-pink);
         }
 
-        .sunset-orb {
-          position: fixed;
-          width: 200px;
-          height: 200px;
-          background: radial-gradient(circle, var(--ctf-pink), #ff6b9d);
-          border-radius: 50%;
-          top: 10%;
-          right: 10%;
-          opacity: 0.3;
-          z-index: -1;
-          animation: pulse 4s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); opacity: 0.6; }
-          50% { transform: scale(1.1); opacity: 0.8; }
-        }
-
         @media (max-width: 768px) {
           .ctf-item {
             flex-direction: column;
@@ -247,173 +293,33 @@
             gap: 0.5rem;
           }
           
-          .sunset-orb {
-            width: 120px;
-            height: 120px;
-            top: 5%;
-            right: 5%;
-          }
-
-          .skyline {
-            height: 30vh;
+          .orb-1, .orb-2, .orb-3 {
+            width: 150px;
+            height: 150px;
           }
         }
     </style>
 </head>
 <body>
-    <div class="skyline">
-      <svg viewBox="0 0 1200 400" preserveAspectRatio="none">
-        
-        <polygon class="building" points="0,400 0,350 25,350 25,320 50,320 50,280 75,280 75,250 100,250 100,220 125,220 125,200 150,200 150,180 175,180 175,160 200,160 200,140 225,140 225,120 250,120 250,100 275,100 275,80 300,80 300,60 325,60 325,40 350,40 350,30 375,30 375,20 400,20 400,10 425,10 425,20 450,20 450,30 475,30 475,40 500,40 500,50 525,50 525,60 550,60 550,80 575,80 575,100 600,100 600,120 625,120 625,140 650,140 650,160 675,160 675,180 700,180 700,200 725,200 725,220 750,220 750,240 775,240 775,260 800,260 800,280 825,280 825,300 850,300 850,320 875,320 875,340 900,340 900,360 925,360 925,380 950,380 950,390 1000,390 1000,370 1025,370 1025,350 1050,350 1050,330 1075,330 1075,310 1100,310 1100,290 1125,290 1125,270 1150,270 1150,250 1175,250 1175,400 1200,400" />
-        
-        
-        
-        <rect class="building" x="50" y="180" width="35" height="220"/>
-        <rect class="building-light" x="52" y="182" width="31" height="216"/>
-        
-        
-        <rect class="building" x="120" y="140" width="28" height="260"/>
-        <rect class="building-light" x="122" y="142" width="24" height="256"/>
-        
-        
-        <rect class="building" x="180" y="90" width="32" height="310"/>
-        <rect class="building-light" x="182" y="92" width="28" height="306"/>
-        
-        
-        <rect class="building" x="240" y="60" width="30" height="340"/>
-        <rect class="building-light" x="242" y="62" width="26" height="336"/>
-        
-        
-        <rect class="building" x="300" y="30" width="38" height="370"/>
-        <rect class="building-light" x="302" y="32" width="34" height="366"/>
-        
-        
-        <rect class="building" x="360" y="15" width="25" height="385"/>
-        <rect class="building-light" x="362" y="17" width="21" height="381"/>
-        
-        
-        <rect class="building" x="420" y="45" width="30" height="355"/>
-        <rect class="building-light" x="422" y="47" width="26" height="351"/>
-        
-        <rect class="building" x="480" y="70" width="35" height="330"/>
-        <rect class="building-light" x="482" y="72" width="31" height="326"/>
-        
-        <rect class="building" x="540" y="100" width="28" height="300"/>
-        <rect class="building-light" x="542" y="102" width="24" height="296"/>
-        
-        <rect class="building" x="590" y="130" width="32" height="270"/>
-        <rect class="building-light" x="592" y="132" width="28" height="266"/>
-        
-        <rect class="building" x="640" y="160" width="30" height="240"/>
-        <rect class="building-light" x="642" y="162" width="26" height="236"/>
-        
-        <rect class="building" x="690" y="190" width="28" height="210"/>
-        <rect class="building-light" x="692" y="192" width="24" height="206"/>
-        
-        <rect class="building" x="740" y="220" width="32" height="180"/>
-        <rect class="building-light" x="742" y="222" width="28" height="176"/>
-        
-        <rect class="building" x="790" y="250" width="30" height="150"/>
-        <rect class="building-light" x="792" y="252" width="26" height="146"/>
-        
-        <rect class="building" x="840" y="280" width="28" height="120"/>
-        <rect class="building-light" x="842" y="282" width="24" height="116"/>
-        
-        <rect class="building" x="890" y="310" width="25" height="90"/>
-        <rect class="building-light" x="892" y="312" width="21" height="86"/>
-        
-        <rect class="building" x="940" y="340" width="30" height="60"/>
-        <rect class="building-light" x="942" y="342" width="26" height="56"/>
-        
-        <rect class="building" x="990" y="360" width="28" height="40"/>
-        <rect class="building-light" x="992" y="362" width="24" height="36"/>
-        
-        
-        <g class="windows">
-          
-          <rect class="window" x="55" y="190" width="3" height="4"/>
-          <rect class="window-dim" x="60" y="190" width="3" height="4"/>
-          <rect class="window" x="65" y="190" width="3" height="4"/>
-          <rect class="window-dim" x="70" y="190" width="3" height="4"/>
-          <rect class="window" x="75" y="190" width="3" height="4"/>
-          
-          <rect class="window-dim" x="55" y="200" width="3" height="4"/>
-          <rect class="window" x="60" y="200" width="3" height="4"/>
-          <rect class="window-dim" x="65" y="200" width="3" height="4"/>
-          <rect class="window" x="70" y="200" width="3" height="4"/>
-          <rect class="window-dim" x="75" y="200" width="3" height="4"/>
-          
-          <rect class="window" x="55" y="210" width="3" height="4"/>
-          <rect class="window-dim" x="60" y="210" width="3" height="4"/>
-          <rect class="window" x="65" y="210" width="3" height="4"/>
-          <rect class="window-dim" x="70" y="210" width="3" height="4"/>
-          <rect class="window" x="75" y="210" width="3" height="4"/>
-          
-          
-          <rect class="window" x="125" y="150" width="3" height="4"/>
-          <rect class="window-dim" x="130" y="150" width="3" height="4"/>
-          <rect class="window" x="135" y="150" width="3" height="4"/>
-          <rect class="window-dim" x="140" y="150" width="3" height="4"/>
-          
-          <rect class="window-dim" x="125" y="160" width="3" height="4"/>
-          <rect class="window" x="130" y="160" width="3" height="4"/>
-          <rect class="window-dim" x="135" y="160" width="3" height="4"/>
-          <rect class="window" x="140" y="160" width="3" height="4"/>
-          
-          <rect class="window" x="125" y="170" width="3" height="4"/>
-          <rect class="window-dim" x="130" y="170" width="3" height="4"/>
-          <rect class="window" x="135" y="170" width="3" height="4"/>
-          <rect class="window-dim" x="140" y="170" width="3" height="4"/>
-          
-          
-          <rect class="window" x="365" y="25" width="2" height="3"/>
-          <rect class="window-dim" x="368" y="25" width="2" height="3"/>
-          <rect class="window" x="371" y="25" width="2" height="3"/>
-          <rect class="window-dim" x="374" y="25" width="2" height="3"/>
-          <rect class="window" x="377" y="25" width="2" height="3"/>
-          
-          <rect class="window-dim" x="365" y="35" width="2" height="3"/>
-          <rect class="window" x="368" y="35" width="2" height="3"/>
-          <rect class="window-dim" x="371" y="35" width="2" height="3"/>
-          <rect class="window" x="374" y="35" width="2" height="3"/>
-          <rect class="window-dim" x="377" y="35" width="2" height="3"/>
-          
-          <rect class="window" x="365" y="45" width="2" height="3"/>
-          <rect class="window-dim" x="368" y="45" width="2" height="3"/>
-          <rect class="window" x="371" y="45" width="2" height="3"/>
-          <rect class="window-dim" x="374" y="45" width="2" height="3"/>
-          <rect class="window" x="377" y="45" width="2" height="3"/>
-          
-          
-          <rect class="window" x="185" y="100" width="3" height="4"/>
-          <rect class="window-dim" x="190" y="100" width="3" height="4"/>
-          <rect class="window" x="195" y="100" width="3" height="4"/>
-          <rect class="window-dim" x="200" y="100" width="3" height="4"/>
-          <rect class="window" x="205" y="100" width="3" height="4"/>
-          
-          <rect class="window-dim" x="185" y="110" width="3" height="4"/>
-          <rect class="window" x="190" y="110" width="3" height="4"/>
-          <rect class="window-dim" x="195" y="110" width="3" height="4"/>
-          <rect class="window" x="200" y="110" width="3" height="4"/>
-          <rect class="window-dim" x="205" y="110" width="3" height="4"/>
-        </g>
-        
-        
-        <line class="antenna" x1="372" y1="15" x2="372" y2="5"/>
-        <line class="antenna" x1="370" y1="5" x2="374" y2="5"/>
-        
-        <line class="antenna" x1="67" y1="180" x2="67" y2="170"/>
-        <line class="antenna" x1="135" y1="140" x2="135" y2="130"/>
-        <line class="antenna" x1="255" y1="60" x2="255" y2="50"/>
-        
-        
-        <rect class="building-light" x="240" y="58" width="30" height="4"/>
-        <rect class="building-light" x="300" y="28" width="38" height="4"/>
-        <rect class="building-light" x="360" y="13" width="25" height="4"/>
-      </svg>
+    
+    <div class="geometric-bg"></div>
+    
+    
+    <div class="floating-particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
     </div>
     
-    <div class="sunset-orb"></div>
+    
+    <div class="light-orb orb-1"></div>
+    <div class="light-orb orb-2"></div>
+    <div class="light-orb orb-3"></div>
     
     <main class="main">
       <div class="main__inner">
