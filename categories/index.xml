@@ -2,24 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on Welcome!</title>
-    <link>http://localhost:1313/webPablo/categories/</link>
+    <link>https://pablo10diez2.github.io/webPablo/categories/</link>
     <description>Recent content in Categories on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/webPablo/categories/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://pablo10diez2.github.io/webPablo/categories/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Reversing</title>
-      <link>http://localhost:1313/webPablo/categories/reversing/</link>
+      <link>https://pablo10diez2.github.io/webPablo/categories/reversing/</link>
       <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/categories/reversing/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/categories/reversing/</guid>
       <description></description>
     </item>
     <item>
       <title>Cryptography</title>
-      <link>http://localhost:1313/webPablo/categories/cryptography/</link>
+      <link>https://pablo10diez2.github.io/webPablo/categories/cryptography/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/webPablo/categories/cryptography/</guid>
+      <guid>https://pablo10diez2.github.io/webPablo/categories/cryptography/</guid>
       <description></description>
     </item>
   </channel>
