@@ -2,55 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</loc>
+    <loc>https://pablo10diez2.github.io/posts/l3akctf/basiclll/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/buffer-overflow/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/categories/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/crypto/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/categories/crypto/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/exploitation/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/gdb/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/posts/l3akctf/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/math/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/posts/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/tags/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/</loc>
+    <lastmod>2025-07-14T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://pablo10diez2.github.io/posts/dawgctf/64-bits/</loc>
     <lastmod>2025-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/tags/buffer-overflow/</loc>
+    <loc>https://pablo10diez2.github.io/posts/dawgctf/</loc>
     <lastmod>2025-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/categories/</loc>
+    <loc>https://pablo10diez2.github.io/categories/reversing/</loc>
     <lastmod>2025-04-21T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/posts/dawgctf/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/tags/exploitation/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/tags/gdb/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/posts/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/categories/reversing/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/tags/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/</loc>
-    <lastmod>2025-04-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</loc>
+    <loc>https://pablo10diez2.github.io/posts/dawgctf/baby-rsa2/</loc>
     <lastmod>2025-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</loc>
+    <loc>https://pablo10diez2.github.io/tags/cantor/</loc>
     <lastmod>2025-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/tags/cantor/</loc>
+    <loc>https://pablo10diez2.github.io/posts/dawgctf/cantorspairadox/</loc>
     <lastmod>2025-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/tags/cryptography/</loc>
+    <loc>https://pablo10diez2.github.io/tags/cryptography/</loc>
     <lastmod>2025-04-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/webPablo/categories/cryptography/</loc>
-    <lastmod>2025-04-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/tags/math/</loc>
-    <lastmod>2025-04-19T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/webPablo/tags/rsa/</loc>
+    <loc>https://pablo10diez2.github.io/tags/rsa/</loc>
     <lastmod>2025-04-19T00:00:00+00:00</lastmod>
   </url>
 </urlset>

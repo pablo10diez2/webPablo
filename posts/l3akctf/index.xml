@@ -1,0 +1,428 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>L3akCTF 2025 on Welcome!</title>
+        <link>https://pablo10diez2.github.io/posts/l3akctf/</link>
+        <description>Recent content in L3akCTF 2025 on Welcome!</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <lastBuildDate>Mon, 14 Jul 2025 00:00:00 +0000</lastBuildDate>
+        <atom:link href="https://pablo10diez2.github.io/posts/l3akctf/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>BasicLLL</title>
+            <link>https://pablo10diez2.github.io/posts/l3akctf/basiclll/</link>
+            <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
+            
+            <guid>https://pablo10diez2.github.io/posts/l3akctf/basiclll/</guid>
+            <description>Challenge: Simple crypto is the best crypto.
+For this crypto chall we have to download 1 file. A sage one.
+def generate(): p = random_prime(2^1024, lbound=2^1023) x=randint(1,2^16) y=randint(1,2^256) a=randint(2^1023,2^1024) q=random_prime(2^1024) n=p*q return x,a,y,n,p x,a,y,n,p = generate() k = x * y + a * p e=65537 print(f&amp;#34;x = {x}&amp;#34;) print(f&amp;#34;a = {a}&amp;#34;) print(f&amp;#34;n = {n}&amp;#34;) print(f&amp;#34;k = {k}&amp;#34;) m = b&amp;#39;L3AK{&amp;lt;Redacted&amp;gt;}&amp;#39; flag = int.from_bytes(m, byteorder=&amp;#39;big&amp;#39;) c= pow(flag, e, n) print(f&amp;#34;c = {c}&amp;#34;) &amp;#39;&amp;#39;&amp;#39; x = 54203 a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713 n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073 k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119 c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473 &amp;#39;&amp;#39;&amp;#39; With just a simple look we can see that this is RSA.</description>
+            <content type="html"><![CDATA[<p>Challenge:
+<strong>Simple crypto is the best crypto.</strong></p>
+<p>For this crypto chall we have to download 1 file. A sage one.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>():
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> random_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>, lbound<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1023</span>)
+</span></span><span style="display:flex;"><span>    x<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>    y<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">256</span>)
+</span></span><span style="display:flex;"><span>    a<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1023</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>)
+</span></span><span style="display:flex;"><span>    q<span style="color:#f92672">=</span>random_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>)
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>p<span style="color:#f92672">*</span>q
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> x,a,y,n,p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x,a,y,n,p <span style="color:#f92672">=</span> generate()
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> y <span style="color:#f92672">+</span> a <span style="color:#f92672">*</span> p
+</span></span><span style="display:flex;"><span>e<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;x = </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;a = </span><span style="color:#e6db74">{</span>a<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;n = </span><span style="color:#e6db74">{</span>n<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;k = </span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;L3AK{&lt;Redacted&gt;}&#39;</span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(m, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;big&#39;</span>)
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">=</span> pow(flag, e, n)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;c = </span><span style="color:#e6db74">{</span>c<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">x = 54203
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span></code></pre></div><p>With just a simple look we can see that this is RSA. So once we are aware of that, we know that in order to decipher RSA we need d, the private key. If you don&rsquo;t understand or are not very familiar with RSA I would suggest checking this: <a href="https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/">https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/</a> , that will give you a brief summary in order to understand the following equations.</p>
+<p>One of the ways to compute d in python is the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>d <span style="color:#f92672">=</span> pow(e, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiN)
+</span></span></code></pre></div><p>But we dont have phiN, and for phiN we also need p and q. So how do we address this challenge?</p>
+<p>We need to solve k = xy + ap.
+With some math we can reorder this so that we can calculate it with the variables we have.
+k = xy + ap</p>
+<p>k - xy = ap</p>
+<p>k - xy ≡ 0 (mod a) (Modular congruence property)</p>
+<p>y = k/x (mod a)</p>
+<p>y = x⁻1 k (mod a)</p>
+<p>We can calculate this in python as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>y <span style="color:#f92672">=</span> pow(x<span style="color:#960050;background-color:#1e0010">⁻</span><span style="color:#ae81ff">1</span>, k, a)
+</span></span></code></pre></div><p>For some more clarity this:
+x = pow(4, 3, 5)
+means:
+(4x4x4)%5</p>
+<p>So the script to solve the challenge would be the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">54203</span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713</span>
+</span></span><span style="display:flex;"><span>n <span style="color:#f92672">=</span> <span style="color:#ae81ff">12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073</span>
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> <span style="color:#ae81ff">24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> <span style="color:#ae81ff">11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473</span>
+</span></span><span style="display:flex;"><span>e<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k = x*y + a*p</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k - x*y = a*p </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k - x*y =_ 0 (mod a)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># y =_ (x⁻1)*k (mod a)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x_inv <span style="color:#f92672">=</span> pow(x, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, a)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> (x_inv <span style="color:#f92672">*</span> k) <span style="color:#f92672">%</span> a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> (k<span style="color:#f92672">-</span>(x<span style="color:#f92672">*</span>y))<span style="color:#f92672">//</span>a
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> n<span style="color:#f92672">//</span>p
+</span></span><span style="display:flex;"><span>phiN <span style="color:#f92672">=</span> (p<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>(q<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> pow(e, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiN)
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> long_to_bytes(pow(c,d,n))
+</span></span><span style="display:flex;"><span>print(m<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p><code>L3AK{u_4ctu4lly_pwn3d_LLL_w1th_sh0rt_v3ct0rs_n1c3}</code></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>Shiro Hero</title>
+            <link>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</link>
+            <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
+            
+            <guid>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</guid>
+            <description>Challenge:
+For this crypto chall we have to download 4 files, 3 of them are python scripts and the last one is just a text file.
+Chall.py
+from secrets import randbits from prng import xorshiro256 from Crypto.Cipher import AES from Crypto.Util.Padding import pad, unpad from ecc import ECDSA from Crypto.Util.number import bytes_to_long, long_to_bytes import hashlib flag = open(&amp;#34;flag.txt&amp;#34;, &amp;#34;rb&amp;#34;).read() state = [randbits(64) for _ in range(4)] prng = xorshiro256(state) leaks = [prng.</description>
+            <content type="html"><![CDATA[<p>Challenge:</p>
+<p>For this crypto chall we have to download 4 files, 3 of them are python scripts and the last one is just a text file.</p>
+<p><strong>Chall.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> secrets <span style="color:#f92672">import</span> randbits
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> prng <span style="color:#f92672">import</span> xorshiro256
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> AES
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.Padding <span style="color:#f92672">import</span> pad, unpad
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> ecc <span style="color:#f92672">import</span> ECDSA
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> bytes_to_long, long_to_bytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> open(<span style="color:#e6db74">&#34;flag.txt&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>)<span style="color:#f92672">.</span>read()
+</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> [randbits(<span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>)]
+</span></span><span style="display:flex;"><span>prng <span style="color:#f92672">=</span> xorshiro256(state)
+</span></span><span style="display:flex;"><span>leaks <span style="color:#f92672">=</span> [prng<span style="color:#f92672">.</span>next_raw() <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>)]
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;PRNG leaks: </span><span style="color:#e6db74">{</span>[hex(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> leaks]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>Apriv, Apub <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>gen_keypair()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;public_key = </span><span style="color:#e6db74">{</span>Apub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>msg <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;My favorite number is 0x69. I&#39;m a hero in your mother&#39;s bedroom, I&#39;m a hero in your father&#39;s eyes. What am I?&#34;</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#f92672">=</span> bytes_to_long(msg)
+</span></span><span style="display:flex;"><span>sig <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>ecdsa_sign(H, Apriv, prng)                  
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Message = </span><span style="color:#e6db74">{</span>msg<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Hash = </span><span style="color:#e6db74">{</span>H<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;r, s = </span><span style="color:#e6db74">{</span>sig<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>key <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>sha256(long_to_bytes(Apriv))<span style="color:#f92672">.</span>digest()
+</span></span><span style="display:flex;"><span>iv <span style="color:#f92672">=</span> randbits(<span style="color:#ae81ff">128</span>)<span style="color:#f92672">.</span>to_bytes(<span style="color:#ae81ff">16</span>, <span style="color:#e6db74">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_CBC, iv)
+</span></span><span style="display:flex;"><span>ciphertext <span style="color:#f92672">=</span> iv<span style="color:#f92672">.</span>hex() <span style="color:#f92672">+</span> cipher<span style="color:#f92672">.</span>encrypt(pad(flag, <span style="color:#ae81ff">16</span>))<span style="color:#f92672">.</span>hex()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;ciphertext = </span><span style="color:#e6db74">{</span>ciphertext<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;output.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;PRNG leaks: </span><span style="color:#e6db74">{</span>[hex(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> leaks]<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;public_key = </span><span style="color:#e6db74">{</span>Apub<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Message = </span><span style="color:#e6db74">{</span>msg<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Hash = </span><span style="color:#e6db74">{</span>H<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;r, s = </span><span style="color:#e6db74">{</span>sig<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;ciphertext = </span><span style="color:#e6db74">{</span>ciphertext<span style="color:#e6db74">}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p><strong>ecc.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/env python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> hashlib <span style="color:#f92672">import</span> sha3_256, sha256
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> bytes_to_long, inverse
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> AES
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.Padding <span style="color:#f92672">import</span> unpad, pad
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> prng <span style="color:#f92672">import</span> xorshiro256, MASK64     
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ECDSA</span>:
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;ECDSA implementation for secp256k1 curve&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># parameters</span>
+</span></span><span style="display:flex;"><span>    p  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F</span>
+</span></span><span style="display:flex;"><span>    a  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    b  <span style="color:#f92672">=</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>    Gx <span style="color:#f92672">=</span> <span style="color:#ae81ff">55066263022277343669578718895168534326250603453777594175500187360389116729240</span>
+</span></span><span style="display:flex;"><span>    Gy <span style="color:#f92672">=</span> <span style="color:#ae81ff">32670510020758816978083085130507043184471273380659243275938904335757337482424</span>
+</span></span><span style="display:flex;"><span>    n  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141</span>
+</span></span><span style="display:flex;"><span>    G  <span style="color:#f92672">=</span> (Gx, Gy)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>   
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">digest</span>(msg: bytes) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Hash a message and return as integer&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> bytes_to_long(sha256(msg)<span style="color:#f92672">.</span>digest())
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">point_add</span>(P, Q):
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;&#34;&#34;Add two points on the elliptic curve&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> P <span style="color:#f92672">==</span> (<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>): 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> Q
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> Q <span style="color:#f92672">==</span> (<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>): 
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> P
+</span></span><span style="display:flex;"><span>        (x1, y1), (x2, y2) <span style="color:#f92672">=</span> P, Q
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> x1 <span style="color:#f92672">==</span> x2 <span style="color:#f92672">and</span> (y1 <span style="color:#f92672">+</span> y2) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>p <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>: <span style="color:#66d9ef">return</span> (<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> P <span style="color:#f92672">==</span> Q:
+</span></span><span style="display:flex;"><span>            l <span style="color:#f92672">=</span> (<span style="color:#ae81ff">3</span> <span style="color:#f92672">*</span> x1 <span style="color:#f92672">*</span> x1) <span style="color:#f92672">*</span> inverse(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> y1, ECDSA<span style="color:#f92672">.</span>p) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>p
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>            l <span style="color:#f92672">=</span> (y2 <span style="color:#f92672">-</span> y1) <span style="color:#f92672">*</span> inverse(x2 <span style="color:#f92672">-</span> x1, ECDSA<span style="color:#f92672">.</span>p) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>p
+</span></span><span style="display:flex;"><span>        x3 <span style="color:#f92672">=</span> (l <span style="color:#f92672">*</span> l <span style="color:#f92672">-</span> x1 <span style="color:#f92672">-</span> x2) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>p
+</span></span><span style="display:flex;"><span>        y3 <span style="color:#f92672">=</span> (l <span style="color:#f92672">*</span> (x1 <span style="color:#f92672">-</span> x3) <span style="color:#f92672">-</span> y1) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>p
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (x3, y3)
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">scalar_mult</span>(k, P):
+</span></span><span style="display:flex;"><span>        R <span style="color:#f92672">=</span> (<span style="color:#66d9ef">None</span>, <span style="color:#66d9ef">None</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> k:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> k <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">1</span>: R <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>point_add(R, P)
+</span></span><span style="display:flex;"><span>            P <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>point_add(P, P)
+</span></span><span style="display:flex;"><span>            k <span style="color:#f92672">&gt;&gt;=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> R
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">gen_keypair</span>():
+</span></span><span style="display:flex;"><span>        d <span style="color:#f92672">=</span> random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">1</span>, ECDSA<span style="color:#f92672">.</span>n <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)         
+</span></span><span style="display:flex;"><span>        Q <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>scalar_mult(d, ECDSA<span style="color:#f92672">.</span>G)          
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> d, Q                                 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ecdsa_sign</span>(h: int, d: int, prng: xorshiro256):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            k <span style="color:#f92672">=</span> prng() <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            x, _ <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>scalar_mult(k, ECDSA<span style="color:#f92672">.</span>G)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> x <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:  
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            r <span style="color:#f92672">=</span> x <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> r:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            s <span style="color:#f92672">=</span> (inverse(k, ECDSA<span style="color:#f92672">.</span>n) <span style="color:#f92672">*</span> (h <span style="color:#f92672">+</span> r <span style="color:#f92672">*</span> d)) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> s:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> r, s
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ecdsa_verify</span>(h, Q, sig):
+</span></span><span style="display:flex;"><span>        r, s <span style="color:#f92672">=</span> sig
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> r <span style="color:#f92672">&lt;</span> ECDSA<span style="color:#f92672">.</span>n <span style="color:#f92672">and</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;=</span> s <span style="color:#f92672">&lt;</span> ECDSA<span style="color:#f92672">.</span>n):
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        w  <span style="color:#f92672">=</span> inverse(s, ECDSA<span style="color:#f92672">.</span>n)
+</span></span><span style="display:flex;"><span>        u1 <span style="color:#f92672">=</span> (h <span style="color:#f92672">*</span> w) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>        u2 <span style="color:#f92672">=</span> (r <span style="color:#f92672">*</span> w) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>        x, _ <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>point_add(ECDSA<span style="color:#f92672">.</span>scalar_mult(u1, ECDSA<span style="color:#f92672">.</span>G), ECDSA<span style="color:#f92672">.</span>scalar_mult(u2, Q))
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> x <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:  
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">False</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (x <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n) <span style="color:#f92672">==</span> r
+</span></span></code></pre></div><p><strong>prng.py</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#75715e">#!/usr/bin/python3</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> bytes_to_long, inverse
+</span></span><span style="display:flex;"><span>MASK64 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">64</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>                    
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_rotl</span>(x: int, k: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> ((x <span style="color:#f92672">&lt;&lt;</span> k) <span style="color:#f92672">|</span> (x <span style="color:#f92672">&gt;&gt;</span> (<span style="color:#ae81ff">64</span> <span style="color:#f92672">-</span> k))) <span style="color:#f92672">&amp;</span> MASK64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">xorshiro256</span>:
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __init__(self, seed):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> len(seed) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">4</span>:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">ValueError</span>(<span style="color:#e6db74">&#34;seed must have four 64-bit words&#34;</span>)
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>s <span style="color:#f92672">=</span> [w <span style="color:#f92672">&amp;</span> MASK64 <span style="color:#66d9ef">for</span> w <span style="color:#f92672">in</span> seed]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">@staticmethod</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">_temper</span>(s1: int) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> (_rotl((s1 <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">&amp;</span> MASK64, <span style="color:#ae81ff">7</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">9</span>) <span style="color:#f92672">&amp;</span> MASK64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">next_raw</span>(self) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        s0, s1, s2, s3 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>s
+</span></span><span style="display:flex;"><span>        t <span style="color:#f92672">=</span> (s1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">17</span>) <span style="color:#f92672">&amp;</span> MASK64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        s2 <span style="color:#f92672">^=</span> s0
+</span></span><span style="display:flex;"><span>        s3 <span style="color:#f92672">^=</span> s1
+</span></span><span style="display:flex;"><span>        s1 <span style="color:#f92672">^=</span> s2
+</span></span><span style="display:flex;"><span>        s0 <span style="color:#f92672">^=</span> s3            
+</span></span><span style="display:flex;"><span>        s2 <span style="color:#f92672">^=</span> t
+</span></span><span style="display:flex;"><span>        s3  <span style="color:#f92672">=</span> _rotl(s3, <span style="color:#ae81ff">45</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>s <span style="color:#f92672">=</span> [s0, s1, s2, s3]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> s1          
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">randrange</span>(self, start, stop, inclusive<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> inclusive:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> start <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>next_raw() <span style="color:#f92672">%</span> (stop <span style="color:#f92672">-</span> start <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> start <span style="color:#f92672">+</span> self<span style="color:#f92672">.</span>next_raw() <span style="color:#f92672">%</span> (stop <span style="color:#f92672">-</span> start)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> __call__(self) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>_temper(self<span style="color:#f92672">.</span>next_raw())
+</span></span></code></pre></div><p>outuput.txt</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>PRNG leaks: [<span style="color:#e6db74">&#39;0x785a1cb672480875&#39;</span>, <span style="color:#e6db74">&#39;0x91c1748fec1dd008&#39;</span>, <span style="color:#e6db74">&#39;0x5c52ec3a5931f942&#39;</span>, <span style="color:#e6db74">&#39;0xac4a414750cd93d7&#39;</span>]
+</span></span><span style="display:flex;"><span>public_key <span style="color:#f92672">=</span> (<span style="color:#ae81ff">108364470534029284279984867862312730656321584938782311710100671041229823956830</span>, <span style="color:#ae81ff">13364418211739203431596186134046538294475878411857932896543303792197679964862</span>)
+</span></span><span style="display:flex;"><span>Message <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;My favorite number is 0x69. I&#39;m a hero in your mother&#39;s bedroom, I&#39;m a hero in your father&#39;s eyes. What am I?&#34;</span>
+</span></span><span style="display:flex;"><span>Hash <span style="color:#f92672">=</span> <span style="color:#ae81ff">9529442011748664341738996529750340456157809966093480864347661556347262857832209689182090159309916943522134394915152900655982067042469766622239675961581701969877932734729317939525310618663767439074719450934795911313281256406574646718593855471365539861693353445695</span>
+</span></span><span style="display:flex;"><span>r, s <span style="color:#f92672">=</span> (<span style="color:#ae81ff">54809455810753652852551513610089439557885757561953942958061085530360106094036</span>, <span style="color:#ae81ff">42603888460883531054964904523904896098962762092412438324944171394799397690539</span>)
+</span></span><span style="display:flex;"><span>ciphertext <span style="color:#f92672">=</span> <span style="color:#ae81ff">404e9</span>a7bbdac8d3912d881914ab2bdb924d85338fbd1a6d62a88d793b4b9438400489766e8e9fb157c961075ad4421fc
+</span></span></code></pre></div><p>First of all the main file is <strong>chall.py</strong>, since it has all the algorithms to solve. The structure is the following, diferent ciphers that we need to solve in order to continue. We also have access to <strong>ecc.py</strong> and <strong>prng.py</strong> that show us the implementation for some functions, as well to some more data with <strong>output.txt</strong>.</p>
+<p>Knowing all this, lets start.</p>
+<p>Here 4 64 bits random numbers are generated and they are assigned to the state of a cipher called xorshiro256.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>state <span style="color:#f92672">=</span> [randbits(<span style="color:#ae81ff">64</span>) <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>)]
+</span></span><span style="display:flex;"><span>prng <span style="color:#f92672">=</span> xorshiro256(state)
+</span></span></code></pre></div><p>In xorshiro this 4 numbers (state) are defined as s0, s1, s2, s3. Here the &ldquo;leaks&rdquo; (in the output.txt) that are printed are not
+the s0,s1&hellip; numbers. We are just seeing s1 being updated 4 times due to the next_raw() function.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>leaks <span style="color:#f92672">=</span> [prng<span style="color:#f92672">.</span>next_raw() <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>)]
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;PRNG leaks: </span><span style="color:#e6db74">{</span>[hex(x) <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> leaks]<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">next_raw</span>(self) <span style="color:#f92672">-&gt;</span> int:
+</span></span><span style="display:flex;"><span>        s0, s1, s2, s3 <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>s
+</span></span><span style="display:flex;"><span>        t <span style="color:#f92672">=</span> (s1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">17</span>) <span style="color:#f92672">&amp;</span> MASK64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        s2 <span style="color:#f92672">^=</span> s0
+</span></span><span style="display:flex;"><span>        s3 <span style="color:#f92672">^=</span> s1
+</span></span><span style="display:flex;"><span>        s1 <span style="color:#f92672">^=</span> s2
+</span></span><span style="display:flex;"><span>        s0 <span style="color:#f92672">^=</span> s3            
+</span></span><span style="display:flex;"><span>        s2 <span style="color:#f92672">^=</span> t
+</span></span><span style="display:flex;"><span>        s3  <span style="color:#f92672">=</span> _rotl(s3, <span style="color:#ae81ff">45</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        self<span style="color:#f92672">.</span>s <span style="color:#f92672">=</span> [s0, s1, s2, s3]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> s1
+</span></span></code></pre></div><p>AS you can see above the whole state (s0,s1,s2,3) is changed but we only see the s1.</p>
+<p>Understanding this part is important because we are going to need to recover the 4 original numbers in order to continue. So again, prng is updated in 4 rounds with next_raw() and we have access to the value of s1 in each round.</p>
+<p>For solving this I used a very useful tool called z3, I wont go into too much detail explaining the following script but we are
+basically forcing z3 to find the 4 original 64 bits numbers by reversing the leaks.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>MASK64 <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">64</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">rotl</span>(x, k):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> RotateLeft(x, k)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>leaks <span style="color:#f92672">=</span> [
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x785a1cb672480875</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x91c1748fec1dd008</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0x5c52ec3a5931f942</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">0xac4a414750cd93d7</span>
+</span></span><span style="display:flex;"><span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>s0 <span style="color:#f92672">=</span> BitVec(<span style="color:#e6db74">&#39;s0&#39;</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>s1 <span style="color:#f92672">=</span> BitVec(<span style="color:#e6db74">&#39;s1&#39;</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>s2 <span style="color:#f92672">=</span> BitVec(<span style="color:#e6db74">&#39;s2&#39;</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>s3 <span style="color:#f92672">=</span> BitVec(<span style="color:#e6db74">&#39;s3&#39;</span>, <span style="color:#ae81ff">64</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">next_raw_z3</span>(s0, s1, s2, s3):
+</span></span><span style="display:flex;"><span>    t <span style="color:#f92672">=</span> (s1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">17</span>) <span style="color:#f92672">&amp;</span> MASK64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    s2_new <span style="color:#f92672">=</span> s2 <span style="color:#f92672">^</span> s0
+</span></span><span style="display:flex;"><span>    s3_new <span style="color:#f92672">=</span> s3 <span style="color:#f92672">^</span> s1
+</span></span><span style="display:flex;"><span>    s1_new <span style="color:#f92672">=</span> s1 <span style="color:#f92672">^</span> s2_new
+</span></span><span style="display:flex;"><span>    s0_new <span style="color:#f92672">=</span> s0 <span style="color:#f92672">^</span> s3_new
+</span></span><span style="display:flex;"><span>    s2_new <span style="color:#f92672">=</span> s2_new <span style="color:#f92672">^</span> t
+</span></span><span style="display:flex;"><span>    s3_new <span style="color:#f92672">=</span> rotl(s3_new, <span style="color:#ae81ff">45</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> s0_new, s1_new, s2_new, s3_new, s1_new 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>solver <span style="color:#f92672">=</span> Solver()
+</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> [s0, s1, s2, s3]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">4</span>):
+</span></span><span style="display:flex;"><span>    state[<span style="color:#ae81ff">0</span>], state[<span style="color:#ae81ff">1</span>], state[<span style="color:#ae81ff">2</span>], state[<span style="color:#ae81ff">3</span>], out <span style="color:#f92672">=</span> next_raw_z3(<span style="color:#f92672">*</span>state)
+</span></span><span style="display:flex;"><span>    solver<span style="color:#f92672">.</span>add(out <span style="color:#f92672">==</span> BitVecVal(leaks[i], <span style="color:#ae81ff">64</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> solver<span style="color:#f92672">.</span>check() <span style="color:#f92672">==</span> sat:
+</span></span><span style="display:flex;"><span>    model <span style="color:#f92672">=</span> solver<span style="color:#f92672">.</span>model()
+</span></span><span style="display:flex;"><span>    recovered_state <span style="color:#f92672">=</span> [model<span style="color:#f92672">.</span>eval(s)<span style="color:#f92672">.</span>as_long() <span style="color:#66d9ef">for</span> s <span style="color:#f92672">in</span> [s0, s1, s2, s3]]
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Estado recuperado:&#34;</span>, recovered_state)
+</span></span></code></pre></div><p>We run the script and here they are.
+[4632343889369999961, 10793220881798324403, 12527397580889080479, 11809022490152434257]</p>
+<p>Now we run into another type of cipher, an ECDSA sign.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>Apriv, Apub <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>gen_keypair()
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;public_key = </span><span style="color:#e6db74">{</span>Apub<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>msg <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#34;My favorite number is 0x69. I&#39;m a hero in your mother&#39;s bedroom, I&#39;m a hero in your father&#39;s eyes. What am I?&#34;</span>
+</span></span><span style="display:flex;"><span>H <span style="color:#f92672">=</span> bytes_to_long(msg)
+</span></span><span style="display:flex;"><span>sig <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>ecdsa_sign(H, Apriv, prng)   
+</span></span></code></pre></div><p>As we can see in the <strong>prng.py</strong>, k, the nounce, is calculated with prng(). But this call, prng(), is done after the 4 rounds of next_raw() of the leaks.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">ecdsa_sign</span>(h: int, d: int, prng: xorshiro256):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
+</span></span><span style="display:flex;"><span>            k <span style="color:#f92672">=</span> prng() <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> k:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            x, _ <span style="color:#f92672">=</span> ECDSA<span style="color:#f92672">.</span>scalar_mult(k, ECDSA<span style="color:#f92672">.</span>G)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> x <span style="color:#f92672">is</span> <span style="color:#66d9ef">None</span>:  
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            r <span style="color:#f92672">=</span> x <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> r:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>            s <span style="color:#f92672">=</span> (inverse(k, ECDSA<span style="color:#f92672">.</span>n) <span style="color:#f92672">*</span> (h <span style="color:#f92672">+</span> r <span style="color:#f92672">*</span> d)) <span style="color:#f92672">%</span> ECDSA<span style="color:#f92672">.</span>n
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> s:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> r, s
+</span></span></code></pre></div><p>We have the original state, so we call next_raw() 4 times and prng() once.</p>
+<p>Before doing this lets take a look to the ECSA signing function.
+<img src="/images/signing.png" alt="ECDSA"></p>
+<p>With some maths we can reorder this and since we have everything either in <strong>output.txt</strong> or <strong>ecc.py</strong> we can just calculate k and continue.
+s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> prng <span style="color:#f92672">import</span> xorshiro256
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>state <span style="color:#f92672">=</span> [<span style="color:#ae81ff">4632343889369999961</span>, <span style="color:#ae81ff">10793220881798324403</span>, <span style="color:#ae81ff">12527397580889080479</span>, <span style="color:#ae81ff">11809022490152434257</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prng <span style="color:#f92672">=</span> xorshiro256(state)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>prng<span style="color:#f92672">.</span>next_raw()
+</span></span><span style="display:flex;"><span>prng<span style="color:#f92672">.</span>next_raw()
+</span></span><span style="display:flex;"><span>prng<span style="color:#f92672">.</span>next_raw()
+</span></span><span style="display:flex;"><span>prng<span style="color:#f92672">.</span>next_raw()
+</span></span><span style="display:flex;"><span>semi_K <span style="color:#f92672">=</span> prng()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>n  <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> semi_K <span style="color:#f92672">%</span> n
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Hash <span style="color:#f92672">=</span> <span style="color:#ae81ff">9529442011748664341738996529750340456157809966093480864347661556347262857832209689182090159309916943522134394915152900655982067042469766622239675961581701969877932734729317939525310618663767439074719450934795911313281256406574646718593855471365539861693353445695</span>
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> <span style="color:#ae81ff">54809455810753652852551513610089439557885757561953942958061085530360106094036</span>
+</span></span><span style="display:flex;"><span>s <span style="color:#f92672">=</span> <span style="color:#ae81ff">42603888460883531054964904523904896098962762092412438324944171394799397690539</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>r_inv <span style="color:#f92672">=</span> pow(r, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, n)
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> ((s<span style="color:#f92672">*</span>k<span style="color:#f92672">-</span>Hash)<span style="color:#f92672">*</span>r_inv) <span style="color:#f92672">%</span> n
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(d)
+</span></span></code></pre></div><p>d: 100589891343820979015464582911071111464252983749550820544942776016668758604656</p>
+<p>The next and final step is an AES CBC cipher. To have the key we just need to apply the same hash function to d. Whereas iv is concatenated to the cipher: ciphertext = 16bits of the iv + cipher. So we just need to divide them.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>key <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>sha256(long_to_bytes(Apriv))<span style="color:#f92672">.</span>digest()
+</span></span><span style="display:flex;"><span>iv <span style="color:#f92672">=</span> randbits(<span style="color:#ae81ff">128</span>)<span style="color:#f92672">.</span>to_bytes(<span style="color:#ae81ff">16</span>, <span style="color:#e6db74">&#34;big&#34;</span>)
+</span></span><span style="display:flex;"><span>cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_CBC, iv)
+</span></span><span style="display:flex;"><span>ciphertext <span style="color:#f92672">=</span> iv<span style="color:#f92672">.</span>hex() <span style="color:#f92672">+</span> cipher<span style="color:#f92672">.</span>encrypt(pad(flag, <span style="color:#ae81ff">16</span>))<span style="color:#f92672">.</span>hex()
+</span></span></code></pre></div><p>And here the script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>d <span style="color:#f92672">=</span> <span style="color:#ae81ff">100589891343820979015464582911071111464252983749550820544942776016668758604656</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Cipher <span style="color:#f92672">import</span> AES
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.Padding <span style="color:#f92672">import</span> unpad
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> long_to_bytes
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> hashlib
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ciphertext_hex <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;404e9a7bbdac8d3912d881914ab2bdb924d85338fbd1a6d62a88d793b4b9438400489766e8e9fb157c961075ad4421fc&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>key <span style="color:#f92672">=</span> hashlib<span style="color:#f92672">.</span>sha256(long_to_bytes(d))<span style="color:#f92672">.</span>digest()
+</span></span><span style="display:flex;"><span>ciphertext_bytes <span style="color:#f92672">=</span> bytes<span style="color:#f92672">.</span>fromhex(ciphertext_hex)
+</span></span><span style="display:flex;"><span>iv <span style="color:#f92672">=</span> ciphertext_bytes[:<span style="color:#ae81ff">16</span>]
+</span></span><span style="display:flex;"><span>ciphertext_data <span style="color:#f92672">=</span> ciphertext_bytes[<span style="color:#ae81ff">16</span>:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>cipher <span style="color:#f92672">=</span> AES<span style="color:#f92672">.</span>new(key, AES<span style="color:#f92672">.</span>MODE_CBC, iv)
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> unpad(cipher<span style="color:#f92672">.</span>decrypt(ciphertext_data), <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#34;FLAG:&#34;</span>, flag<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p><code>FLAG: L3AK{u_4r3_th3_sh1r0_h3r0!}</code></p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>

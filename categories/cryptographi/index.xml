@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cryptographi on Welcome!</title>
+    <link>http://localhost:44719/categories/cryptographi/</link>
+    <description>Recent content in Cryptographi on Welcome!</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:44719/categories/cryptographi/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Shiro Hero</title>
+      <link>http://localhost:44719/posts/l3akctf/prubea2/</link>
+      <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:44719/posts/l3akctf/prubea2/</guid>
+      <description>Challenge:&#xA;For this chall we have to download 4 files.&#xA;Chall.py&#xA;from secrets import randbits from prng import xorshiro256 from Crypto.Cipher import AES from Crypto.Util.Padding import pad, unpad from ecc import ECDSA from Crypto.Util.number import bytes_to_long, long_to_bytes import hashlib flag = open(&amp;#34;flag.txt&amp;#34;, &amp;#34;rb&amp;#34;).read() state = [randbits(64) for _ in range(4)] prng = xorshiro256(state) leaks = [prng.next_raw() for _ in range(4)] print(f&amp;#34;PRNG leaks: {[hex(x) for x in leaks]}&amp;#34;) Apriv, Apub = ECDSA.</description>
+    </item>
+  </channel>
+</rss>

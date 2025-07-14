@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="Pablo">
+<meta name="description" content="Challenge: Simple crypto is the best crypto.
+For this crypto chall we have to download 1 file. A sage one.
+def generate(): p = random_prime(2^1024, lbound=2^1023) x=randint(1,2^16) y=randint(1,2^256) a=randint(2^1023,2^1024) q=random_prime(2^1024) n=p*q return x,a,y,n,p x,a,y,n,p = generate() k = x * y &#43; a * p e=65537 print(f&amp;#34;x = {x}&amp;#34;) print(f&amp;#34;a = {a}&amp;#34;) print(f&amp;#34;n = {n}&amp;#34;) print(f&amp;#34;k = {k}&amp;#34;) m = b&amp;#39;L3AK{&amp;lt;Redacted&amp;gt;}&amp;#39; flag = int.from_bytes(m, byteorder=&amp;#39;big&amp;#39;) c= pow(flag, e, n) print(f&amp;#34;c = {c}&amp;#34;) &amp;#39;&amp;#39;&amp;#39; x = 54203 a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713 n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073 k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119 c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473 &amp;#39;&amp;#39;&amp;#39; With just a simple look we can see that this is RSA." />
+<meta name="keywords" content=", buffer overflow, exploitation, gdb" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://pablo10diez2.github.io/posts/l3akctf/basiclll/" />
+
+
+    <title>
+        
+            BasicLLL :: Welcome!  — Writeups CTF
+        
+    </title>
+
+
+
+
+
+  <link rel="stylesheet" href="/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
+
+
+
+
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="msapplication-TileColor" content="">
+
+
+<meta itemprop="name" content="BasicLLL">
+<meta itemprop="description" content="Challenge: Simple crypto is the best crypto.
+For this crypto chall we have to download 1 file. A sage one.
+def generate(): p = random_prime(2^1024, lbound=2^1023) x=randint(1,2^16) y=randint(1,2^256) a=randint(2^1023,2^1024) q=random_prime(2^1024) n=p*q return x,a,y,n,p x,a,y,n,p = generate() k = x * y &#43; a * p e=65537 print(f&#34;x = {x}&#34;) print(f&#34;a = {a}&#34;) print(f&#34;n = {n}&#34;) print(f&#34;k = {k}&#34;) m = b&#39;L3AK{&lt;Redacted&gt;}&#39; flag = int.from_bytes(m, byteorder=&#39;big&#39;) c= pow(flag, e, n) print(f&#34;c = {c}&#34;) &#39;&#39;&#39; x = 54203 a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713 n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073 k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119 c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473 &#39;&#39;&#39; With just a simple look we can see that this is RSA."><meta itemprop="datePublished" content="2025-07-14T00:00:00+00:00" />
+<meta itemprop="dateModified" content="2025-07-14T00:00:00+00:00" />
+<meta itemprop="wordCount" content="362">
+<meta itemprop="keywords" content="buffer overflow,exploitation,gdb," />
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="BasicLLL"/>
+<meta name="twitter:description" content="Challenge: Simple crypto is the best crypto.
+For this crypto chall we have to download 1 file. A sage one.
+def generate(): p = random_prime(2^1024, lbound=2^1023) x=randint(1,2^16) y=randint(1,2^256) a=randint(2^1023,2^1024) q=random_prime(2^1024) n=p*q return x,a,y,n,p x,a,y,n,p = generate() k = x * y &#43; a * p e=65537 print(f&#34;x = {x}&#34;) print(f&#34;a = {a}&#34;) print(f&#34;n = {n}&#34;) print(f&#34;k = {k}&#34;) m = b&#39;L3AK{&lt;Redacted&gt;}&#39; flag = int.from_bytes(m, byteorder=&#39;big&#39;) c= pow(flag, e, n) print(f&#34;c = {c}&#34;) &#39;&#39;&#39; x = 54203 a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713 n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073 k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119 c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473 &#39;&#39;&#39; With just a simple look we can see that this is RSA."/>
+
+
+
+
+
+    <meta property="article:section" content="crypto" />
+
+
+
+    <meta property="article:published_time" content="2025-07-14 00:00:00 &#43;0000 UTC" />
+
+
+
+
+
+
+
+
+
+
+
+
+    </head>
+
+    
+        <body>
+    
+    
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text ">
+                hello</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/posts/">Writeups</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+  <main class="post">
+
+    <div class="post-info">
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock">
+          <circle cx="12" cy="12" r="10"></circle>
+          <polyline points="12 6 12 12 16 14"></polyline>
+        </svg>
+        2 minutes
+
+        
+      </p>
+    </div>
+
+    <article>
+      <h1 class="post-title">
+        <a href="https://pablo10diez2.github.io/posts/l3akctf/basiclll/">BasicLLL</a>
+      </h1>
+
+      
+
+      
+
+      
+
+      <div class="post-content">
+        <p>Challenge:
+<strong>Simple crypto is the best crypto.</strong></p>
+<p>For this crypto chall we have to download 1 file. A sage one.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate</span>():
+</span></span><span style="display:flex;"><span>    p <span style="color:#f92672">=</span> random_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>, lbound<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1023</span>)
+</span></span><span style="display:flex;"><span>    x<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span>    y<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">256</span>)
+</span></span><span style="display:flex;"><span>    a<span style="color:#f92672">=</span>randint(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1023</span>,<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>)
+</span></span><span style="display:flex;"><span>    q<span style="color:#f92672">=</span>random_prime(<span style="color:#ae81ff">2</span><span style="color:#f92672">^</span><span style="color:#ae81ff">1024</span>)
+</span></span><span style="display:flex;"><span>    n<span style="color:#f92672">=</span>p<span style="color:#f92672">*</span>q
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> x,a,y,n,p
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x,a,y,n,p <span style="color:#f92672">=</span> generate()
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> x <span style="color:#f92672">*</span> y <span style="color:#f92672">+</span> a <span style="color:#f92672">*</span> p
+</span></span><span style="display:flex;"><span>e<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;x = </span><span style="color:#e6db74">{</span>x<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;a = </span><span style="color:#e6db74">{</span>a<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;n = </span><span style="color:#e6db74">{</span>n<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;k = </span><span style="color:#e6db74">{</span>k<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;L3AK{&lt;Redacted&gt;}&#39;</span>
+</span></span><span style="display:flex;"><span>flag <span style="color:#f92672">=</span> int<span style="color:#f92672">.</span>from_bytes(m, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;big&#39;</span>)
+</span></span><span style="display:flex;"><span>c<span style="color:#f92672">=</span> pow(flag, e, n)
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;c = </span><span style="color:#e6db74">{</span>c<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">x = 54203
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+</span></span></code></pre></div><p>With just a simple look we can see that this is RSA. So once we are aware of that, we know that in order to decipher RSA we need d, the private key. If you don&rsquo;t understand or are not very familiar with RSA I would suggest checking this: <a href="https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/">https://www.geeksforgeeks.org/computer-networks/rsa-algorithm-cryptography/</a> , that will give you a brief summary in order to understand the following equations.</p>
+<p>One of the ways to compute d in python is the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>d <span style="color:#f92672">=</span> pow(e, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiN)
+</span></span></code></pre></div><p>But we dont have phiN, and for phiN we also need p and q. So how do we address this challenge?</p>
+<p>We need to solve k = xy + ap.
+With some math we can reorder this so that we can calculate it with the variables we have.
+k = xy + ap</p>
+<p>k - xy = ap</p>
+<p>k - xy ≡ 0 (mod a) (Modular congruence property)</p>
+<p>y = k/x (mod a)</p>
+<p>y = x⁻1 k (mod a)</p>
+<p>We can calculate this in python as:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span>y <span style="color:#f92672">=</span> pow(x<span style="color:#960050;background-color:#1e0010">⁻</span><span style="color:#ae81ff">1</span>, k, a)
+</span></span></code></pre></div><p>For some more clarity this:
+x = pow(4, 3, 5)
+means:
+(4x4x4)%5</p>
+<p>So the script to solve the challenge would be the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> Crypto.Util.number <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x <span style="color:#f92672">=</span> <span style="color:#ae81ff">54203</span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713</span>
+</span></span><span style="display:flex;"><span>n <span style="color:#f92672">=</span> <span style="color:#ae81ff">12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073</span>
+</span></span><span style="display:flex;"><span>k <span style="color:#f92672">=</span> <span style="color:#ae81ff">24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>c <span style="color:#f92672">=</span> <span style="color:#ae81ff">11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473</span>
+</span></span><span style="display:flex;"><span>e<span style="color:#f92672">=</span><span style="color:#ae81ff">65537</span>
+</span></span><span style="display:flex;"><span> 
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k = x*y + a*p</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k - x*y = a*p </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># k - x*y =_ 0 (mod a)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># y =_ (x⁻1)*k (mod a)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>x_inv <span style="color:#f92672">=</span> pow(x, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, a)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> (x_inv <span style="color:#f92672">*</span> k) <span style="color:#f92672">%</span> a
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>p <span style="color:#f92672">=</span> (k<span style="color:#f92672">-</span>(x<span style="color:#f92672">*</span>y))<span style="color:#f92672">//</span>a
+</span></span><span style="display:flex;"><span>q <span style="color:#f92672">=</span> n<span style="color:#f92672">//</span>p
+</span></span><span style="display:flex;"><span>phiN <span style="color:#f92672">=</span> (p<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">*</span>(q<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>d <span style="color:#f92672">=</span> pow(e, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, phiN)
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> long_to_bytes(pow(c,d,n))
+</span></span><span style="display:flex;"><span>print(m<span style="color:#f92672">.</span>decode())
+</span></span></code></pre></div><p><code>L3AK{u_4ctu4lly_pwn3d_LLL_w1th_sh0rt_v3ct0rs_n1c3}</code></p>
+
+      </div>
+    </article>
+
+    <hr />
+
+    <div class="post-info">
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+
+        <span class="tag"><a href="https://pablo10diez2.github.io/tags/buffer-overflow/">buffer overflow</a></span>
+        <span class="tag"><a href="https://pablo10diez2.github.io/tags/exploitation/">exploitation</a></span>
+        <span class="tag"><a href="https://pablo10diez2.github.io/tags/gdb/">gdb</a></span>
+        
+    </p>
+
+      
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+
+        <span class="tag"><a href="https://pablo10diez2.github.io/categories/crypto/">crypto</a></span>
+        
+    </p>
+
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+        362 Words
+      </p>
+
+      <p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+          <line x1="16" y1="2" x2="16" y2="6"></line>
+          <line x1="8" y1="2" x2="8" y2="6"></line>
+          <line x1="3" y1="10" x2="21" y2="10"></line>
+        </svg>
+        
+          2025-07-14 02:00
+        
+
+         
+          
+        
+      </p>
+    </div>
+
+    
+    <div class="pagination">
+        
+
+        <div class="pagination__buttons">
+            
+
+            
+            <span class="button next">
+                <a href="https://pablo10diez2.github.io/posts/l3akctf/shirohero/">
+                    <span class="button__text">Shiro Hero</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+            
+        </div>
+    </div>
+
+
+    
+
+    
+
+    
+
+  </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    
+    
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+<script type="text/javascript" src="/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
+
+
+
+
+    </body>
+</html>
