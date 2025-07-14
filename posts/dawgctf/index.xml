@@ -1,19 +1,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>DawgCTF on Welcome!</title>
-        <link>https://pablo10diez2.github.io/posts/dawgctf/</link>
+        <link>http://localhost:1313/webPablo/posts/dawgctf/</link>
         <description>Recent content in DawgCTF on Welcome!</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Mon, 21 Apr 2025 00:00:00 +0000</lastBuildDate>
-        <atom:link href="https://pablo10diez2.github.io/posts/dawgctf/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="http://localhost:1313/webPablo/posts/dawgctf/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
             <title>64 bits in my ark and texture</title>
-            <link>https://pablo10diez2.github.io/posts/dawgctf/64-bits/</link>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</link>
             <pubDate>Mon, 21 Apr 2025 00:00:00 +0000</pubDate>
             
-            <guid>https://pablo10diez2.github.io/posts/dawgctf/64-bits/</guid>
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/64-bits/</guid>
             <description>Challenge: 64 bits in my Ark and Texture (300 points) Can you pwn it? No libc or system needed. Just good ol, 64 bit binary exploitation. nc connect.umbccd.net 22237
 Alongside this, we are provided with a binary file. When we execute the file 3 basic questions about x86-64 appear. Once we answer the first three questions (2, 1, 4), the first part of the real challenge is proposed:
 They ask us to simply jump to a memory address, if we run this binary with ghidra or binaryNinja (tools for analyzing compiled software) wen can see the first vulnerability.</description>
@@ -25,11 +25,11 @@ nc connect.umbccd.net 22237</strong></p>
 file 3 basic questions about x86-64 appear.
 Once we answer the first three questions (2, 1, 4), the first part of the real
 challenge is proposed:</p>
-<p><img src="/images/questions.png" alt="Questions"></p>
+<p><img src="/webPablo/images/questions.png" alt="Questions"></p>
 <p>They ask us to simply jump to a memory address, if we run this binary with
 ghidra or binaryNinja (tools for analyzing compiled software) wen can see
 the first vulnerability.</p>
-<p><img src="/images/binary.png" alt="Binary"></p>
+<p><img src="/webPablo/images/binary.png" alt="Binary"></p>
 <p>At the end of the main function we can see that is using fgets() to read the user input.
 The problem is that is reading 0x200 bytes (0x200 in hexadecimal = 512 bytes) and storing
 it in a variable buf. But since buf is defined as int64_t it means it can only store 8 bytes.</p>
@@ -61,10 +61,10 @@ but they do have a specific order.</p>
 <p>Now we enter this pattern and see that the program failed, we accessed something that we
 shouldn&rsquo;t in the memory and it broke. But if we scroll down a little bit we can see some
 interesting report that pwndgb shows to us.</p>
-<p><img src="/images/first.png" alt="Error"></p>
+<p><img src="/webPablo/images/first.png" alt="Error"></p>
 <p>We can see the value of rsp with some letters that seem familiar, part of the pattern
 we introduced.</p>
-<p><img src="/images/error.png" alt="rsp"></p>
+<p><img src="/webPablo/images/error.png" alt="rsp"></p>
 <p>Now that we have this we can run another command with python. This will tell us
 the number of letters we need to reach this part of the pattern. So if this prints
 30 it means that we could inject 30 random letters and then after that we would be
@@ -131,10 +131,10 @@ Here comes to play the title of the challenge (64-bits).</p>
 n and below the pointer, the registers. When a function is called in 32 bit architecture all the arguments are passed directly to the stack.</p>
 <p>But in this case we are working in a 64 bits architecture and when calling a function the first 6 parameters are stored in different registers.
 That&rsquo;s why in the image the arguments start from the 7th.</p>
-<p><img src="/images/stack.png" alt="stack"></p>
+<p><img src="/webPablo/images/stack.png" alt="stack"></p>
 <p>Now that we know this we can take a look at which are the registers that are used for the arguments. Since we are only going to need
 1 argument we will use the first one, rdi.</p>
-<p><img src="/images/registers.png" alt="registers"></p>
+<p><img src="/webPablo/images/registers.png" alt="registers"></p>
 <p>Before rewriting the script we need to understand this, once the first bufferoverflow is done calling win1 we can then concatenate the next payload. There
 is no need to make another bufferoverflow and run them separately, since we are alredy stacking them in the stack.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
@@ -280,10 +280,10 @@ saw in a photo earlier we need the 3 register that pass the first 3 arguments, r
         
         <item>
             <title>Baby-RSA 2</title>
-            <link>https://pablo10diez2.github.io/posts/dawgctf/baby-rsa2/</link>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</link>
             <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
             
-            <guid>https://pablo10diez2.github.io/posts/dawgctf/baby-rsa2/</guid>
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</guid>
             <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!
 For this we are given 2 files. The first one is a .py and the second one what prints.
 from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
@@ -356,10 +356,10 @@ So we need to find a number k that matches (e×d − 1) % k == 0.</p>
         
         <item>
             <title>Cantors Pairadox</title>
-            <link>https://pablo10diez2.github.io/posts/dawgctf/cantorspairadox/</link>
+            <link>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</link>
             <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
             
-            <guid>https://pablo10diez2.github.io/posts/dawgctf/cantorspairadox/</guid>
+            <guid>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</guid>
             <description>Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!
 For this we are given 2 files. The first one is a .txt containing the following:
 flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016

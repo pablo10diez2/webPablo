@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Crypto on Welcome!</title>
-    <link>https://pablo10diez2.github.io/categories/crypto/</link>
+    <link>http://localhost:1313/webPablo/categories/crypto/</link>
     <description>Recent content in Crypto on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 14 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://pablo10diez2.github.io/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/webPablo/categories/crypto/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>BasicLLL</title>
-      <link>https://pablo10diez2.github.io/posts/l3akctf/basiclll/</link>
+      <link>http://localhost:1313/webPablo/posts/l3akctf/basiclll/</link>
       <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/posts/l3akctf/basiclll/</guid>
+      <guid>http://localhost:1313/webPablo/posts/l3akctf/basiclll/</guid>
       <description>Challenge: Simple crypto is the best crypto.&#xA;For this crypto chall we have to download 1 file. A sage one.&#xA;def generate(): p = random_prime(2^1024, lbound=2^1023) x=randint(1,2^16) y=randint(1,2^256) a=randint(2^1023,2^1024) q=random_prime(2^1024) n=p*q return x,a,y,n,p x,a,y,n,p = generate() k = x * y + a * p e=65537 print(f&amp;#34;x = {x}&amp;#34;) print(f&amp;#34;a = {a}&amp;#34;) print(f&amp;#34;n = {n}&amp;#34;) print(f&amp;#34;k = {k}&amp;#34;) m = b&amp;#39;L3AK{&amp;lt;Redacted&amp;gt;}&amp;#39; flag = int.from_bytes(m, byteorder=&amp;#39;big&amp;#39;) c= pow(flag, e, n) print(f&amp;#34;c = {c}&amp;#34;) &amp;#39;&amp;#39;&amp;#39; x = 54203 a = 139534605978199350449870348663594126359773246906906418074945064315708552206952695156472923968554408862426942537522569163756593332601739006413404986641247624386522169136633429464195370373009454673819688653512479919153332504769835621608305089536245284458011218876474599059184828911301976396971466368457267831713 n = 12909957208634846878337953184362917609451224905637563117148705894888627434882610771803126452504238664471840340722310690445704139825753660053450331966698205860077330083433391290469454571152366284661640391190008258576947840075212180965738595761925516686689797153224716140447515370184846067654512660266993573880775530634588475842083212670090415716860925772115834314563453955681012820960922892736520042799257599331942717963921797157341454739255402633419216921702659541513141028779948257696746810146033667942181244847983610429227387863821351416689099862418820999250005071861968501333899759899513283613946626413863922604073 k = 24474689179117620559916890529357882261493825442019850679598519081287156822984032786458479363048845076078220151760752906879055457682971398809768604333650029141164831566127754715775782823279839766009120238777348170982471623193652714921064243946655726118484337862412275391615166714375745390409664610412156281691721978732319253694004232933156865189917761521085635692596755802274763409871937618659197646864593743015558828475450200247766980008744319676783526158213931581034209356092026748307730083927225249093712227456855972520574747646873074625455900058136458828591335711677741591552501530047335481073272381631524755666119 c = 11185314040721202177044508537272244264288033276739579716599246665772965854249656943282002695659011960313245796587834222078633141747802754149848079632693280265262199729548775879612614113828267471629389698999657686858047585254549801752634049341009476489652456620836030696102393122618822021082792763848220677651608135328630551380537642144416978955966827336280510774254681264136102268730343853559751471313539810499170669215479225898738527316798768622089152851154959800113070358637984124299357803777453137311143202502153552192970732744885328421213081964363890280109214401691255867427694709196120824176729643585687319321473 &amp;#39;&amp;#39;&amp;#39; With just a simple look we can see that this is RSA.</description>
     </item>
     <item>
       <title>Shiro Hero</title>
-      <link>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</link>
+      <link>http://localhost:1313/webPablo/posts/l3akctf/shirohero/</link>
       <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</guid>
+      <guid>http://localhost:1313/webPablo/posts/l3akctf/shirohero/</guid>
       <description>Challenge:&#xA;For this crypto chall we have to download 4 files, 3 of them are python scripts and the last one is just a text file.&#xA;Chall.py&#xA;from secrets import randbits from prng import xorshiro256 from Crypto.Cipher import AES from Crypto.Util.Padding import pad, unpad from ecc import ECDSA from Crypto.Util.number import bytes_to_long, long_to_bytes import hashlib flag = open(&amp;#34;flag.txt&amp;#34;, &amp;#34;rb&amp;#34;).read() state = [randbits(64) for _ in range(4)] prng = xorshiro256(state) leaks = [prng.</description>
     </item>
     <item>
       <title>Baby-RSA 2</title>
-      <link>https://pablo10diez2.github.io/posts/dawgctf/baby-rsa2/</link>
+      <link>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/posts/dawgctf/baby-rsa2/</guid>
+      <guid>http://localhost:1313/webPablo/posts/dawgctf/baby-rsa2/</guid>
       <description>Challenge: If all I have to do is keep my factors p and q secret, then I can save computation time by sharing the same modulus between all my friends. I&amp;rsquo;ll give them unique e and d pairs to encrypt and decrypt messages. Sounds secure to me!&#xA;For this we are given 2 files. The first one is a .py and the second one what prints.&#xA;from Crypto.Util.number import * from secret import flag # This is my stuff!</description>
     </item>
     <item>
       <title>Cantors Pairadox</title>
-      <link>https://pablo10diez2.github.io/posts/dawgctf/cantorspairadox/</link>
+      <link>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</link>
       <pubDate>Sat, 19 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/posts/dawgctf/cantorspairadox/</guid>
+      <guid>http://localhost:1313/webPablo/posts/dawgctf/cantorspairadox/</guid>
       <description>Challenge: Now that I have encrypted my flag with a new math function I was just researching I can know share it with my friend Cantor and no one will know how to read it except us!&#xA;For this we are given 2 files. The first one is a .txt containing the following:&#xA;flag = 4036872197130975885183239290191447112180924008343518098638033545 53589334888434826276681036070738374179472139222629149731482620127084778 4737584016&#xA;And the other one is a python file:&#xA;from sage.all import sqrt, floor from secret import flag def getTriNumber(n): return n * (n + 1) // 2 # Ensure integer division def pair(n1, n2): S = n1 + n2 return getTriNumber(S) + n2 def pair_array(arr): result = [] for i in range(0, len(arr), 2): result.</description>
     </item>
   </channel>

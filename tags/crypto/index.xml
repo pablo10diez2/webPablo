@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Crypto on Welcome!</title>
-    <link>https://pablo10diez2.github.io/tags/crypto/</link>
+    <link>http://localhost:1313/webPablo/tags/crypto/</link>
     <description>Recent content in Crypto on Welcome!</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 14 Jul 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://pablo10diez2.github.io/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/webPablo/tags/crypto/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Shiro Hero</title>
-      <link>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</link>
+      <link>http://localhost:1313/webPablo/posts/l3akctf/shirohero/</link>
       <pubDate>Mon, 14 Jul 2025 00:00:00 +0000</pubDate>
-      <guid>https://pablo10diez2.github.io/posts/l3akctf/shirohero/</guid>
+      <guid>http://localhost:1313/webPablo/posts/l3akctf/shirohero/</guid>
       <description>Challenge:&#xA;For this crypto chall we have to download 4 files, 3 of them are python scripts and the last one is just a text file.&#xA;Chall.py&#xA;from secrets import randbits from prng import xorshiro256 from Crypto.Cipher import AES from Crypto.Util.Padding import pad, unpad from ecc import ECDSA from Crypto.Util.number import bytes_to_long, long_to_bytes import hashlib flag = open(&amp;#34;flag.txt&amp;#34;, &amp;#34;rb&amp;#34;).read() state = [randbits(64) for _ in range(4)] prng = xorshiro256(state) leaks = [prng.</description>
     </item>
   </channel>

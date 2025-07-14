@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+    <head><script src="/webPablo/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=webPablo/livereload" data-no-instant defer></script>
         <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
@@ -13,7 +13,7 @@ from secrets import randbits from prng import xorshiro256 from Crypto.Cipher imp
 <meta name="keywords" content=", crypto, math" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
-<link rel="canonical" href="https://pablo10diez2.github.io/posts/l3akctf/shirohero/" />
+<link rel="canonical" href="http://localhost:1313/webPablo/posts/l3akctf/shirohero/" />
 
 
     <title>
@@ -26,18 +26,18 @@ from secrets import randbits from prng import xorshiro256 from Crypto.Cipher imp
 
 
 
-  <link rel="stylesheet" href="/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="/webPablo/main.min.ab5336003ba331300318b49292c672210905baf1ef5410a739f647e70c8808fa.css" integrity="sha256-q1M2ADujMTADGLSSksZyIQkFuvHvVBCnOfZH5wyICPo=" crossorigin="anonymous">
 
 
 
 
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="">
-    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="/webPablo/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/webPablo/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/webPablo/favicon-16x16.png">
+    <link rel="manifest" href="/webPablo/site.webmanifest">
+    <link rel="mask-icon" href="/webPablo/safari-pinned-tab.svg" color="">
+    <link rel="shortcut icon" href="/webPablo/favicon.ico">
     <meta name="msapplication-TileColor" content="">
 
 
@@ -85,7 +85,7 @@ from secrets import randbits from prng import xorshiro256 from Crypto.Cipher imp
         <div class="container">
             <header class="header">
     <span class="header__inner">
-        <a href="/" style="text-decoration: none;">
+        <a href="/webPablo" style="text-decoration: none;">
     <div class="logo">
         
             <span class="logo__mark">></span>
@@ -103,7 +103,7 @@ from secrets import randbits from prng import xorshiro256 from Crypto.Cipher imp
 
         <span class="header__right">
                 <nav class="menu">
-    <ul class="menu__inner"><li><a href="/posts/">Writeups</a></li>
+    <ul class="menu__inner"><li><a href="/webPablo/posts/">Writeups</a></li>
     </ul>
 </nav>
 
@@ -136,7 +136,7 @@ from secrets import randbits from prng import xorshiro256 from Crypto.Cipher imp
 
     <article>
       <h1 class="post-title">
-        <a href="https://pablo10diez2.github.io/posts/l3akctf/shirohero/">Shiro Hero</a>
+        <a href="http://localhost:1313/webPablo/posts/l3akctf/shirohero/">Shiro Hero</a>
       </h1>
 
       
@@ -409,7 +409,7 @@ basically forcing z3 to find the 4 original 64 bits numbers by reversing the lea
 </span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> r, s
 </span></span></code></pre></div><p>We have the original state, so we call next_raw() 4 times and prng() once.</p>
 <p>Before doing this lets take a look to the ECSA signing function.
-<img src="/images/signing.png" alt="ECDSA"></p>
+<img src="/webPablo/images/signing.png" alt="ECDSA"></p>
 <p>With some maths we can reorder this and since we have everything either in <strong>output.txt</strong> or <strong>ecc.py</strong> we can just calculate k and continue.
 s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Python" data-lang="Python"><span style="display:flex;"><span><span style="color:#f92672">from</span> prng <span style="color:#f92672">import</span> xorshiro256
@@ -473,8 +473,8 @@ s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
 
-        <span class="tag"><a href="https://pablo10diez2.github.io/tags/crypto/">crypto</a></span>
-        <span class="tag"><a href="https://pablo10diez2.github.io/tags/math/">math</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/tags/crypto/">crypto</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/tags/math/">math</a></span>
         
     </p>
 
@@ -482,7 +482,7 @@ s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
     <p>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder meta-icon"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
 
-        <span class="tag"><a href="https://pablo10diez2.github.io/categories/crypto/">crypto</a></span>
+        <span class="tag"><a href="http://localhost:1313/webPablo/categories/crypto/">crypto</a></span>
         
     </p>
 
@@ -522,7 +522,7 @@ s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
         <div class="pagination__buttons">
             
             <span class="button previous">
-                <a href="https://pablo10diez2.github.io/posts/l3akctf/basiclll/">
+                <a href="http://localhost:1313/webPablo/posts/l3akctf/basiclll/">
                     <span class="button__icon">←</span>
                     <span class="button__text">BasicLLL</span>
                 </a>
@@ -557,7 +557,7 @@ s ≡ (k^⁻1)((H+r) d) (mod n) &ndash;&gt; d ≡(s k-H) r^-1 (mod n)</p>
 
 
 
-<script type="text/javascript" src="/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
+<script type="text/javascript" src="/webPablo/bundle.min.ac2a4bcaed631ec2dc154407be7f09fc28da37de71fae6dee6711b2a3d1622770f87d3cda22c460e9a68ff619bdb1dd75cb7a5d33f159a54e419736cc4541087.js" integrity="sha512-rCpLyu1jHsLcFUQHvn8J/CjaN95x&#43;ube5nEbKj0WIncPh9PNoixGDppo/2Gb2x3XXLel0z8VmlTkGXNsxFQQhw=="></script>
 
 
 
